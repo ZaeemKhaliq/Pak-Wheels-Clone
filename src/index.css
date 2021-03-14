@@ -11,3 +11,85 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* #instagram{ 
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); 
+    background: -webkit-radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); 
+  } */
+  
+  #instagram {
+    position: relative;
+    border-radius: 20%;
+    background: radial-gradient(circle at 33% 100%, #fed373 4%, #f15245 30%, #d92e7f 62%, #9b36b7 85%, #515ecf)
+  }
+  #instagram:after,
+  #instagram:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #fff;
+    transform: translate(-50%, -50%);
+    content: ''
+  }
+  #instagram:before {
+    border-radius: 20%
+  }
+  #instagram:after {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%
+  }
+
+  .show{
+    display:block !important;
+  }
+  
+  .dropdown-content{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: white;
+    background-color: rgb(59, 95, 199);
+    display: none;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 40px;
+    transition-property: all;
+    transition-duration: 0.5s;
+  }
+  
+
+  #listitem{
+    transition-property: background-color;
+    transition-duration: 0.2s;
+  }
+  #listitem:hover {
+    background-color: rgb(39, 69, 160);
+  }
+
+  .dropbtn {
+    z-index:5;
+  }
+
+
+
+  #xBut{
+    background-color: #ED2121;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+  }
+
+  #xBut:hover {
+    cursor: pointer;
+    background-color: rgb(184, 12, 12);
+  }
+
+  #xBut1{
+    cursor:none;
+  }
+  #xBut1:hover{
+    cursor:pointer;
+  }
