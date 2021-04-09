@@ -6,9 +6,15 @@ import Button from '@material-ui/core/Button';
 import {db} from './firebase';
 import { AllDetails, CarContext } from './allDetails';
 import firebase from 'firebase';
-
+import Fade from 'react-reveal/Fade';
+import { useConfirm } from 'material-ui-confirm';
+import ReactPaginate from 'react-paginate';
 
 export default function Body(props){
+
+    const {value,value2} = useContext(CarContext);
+    const [screen,setScreen] = value2;
+    console.log(screen);
 
     
     const body = {
@@ -54,6 +60,14 @@ export default function Body(props){
         1: 1,
         2: 2
     };
+    
+    const mobBody = {
+        border:'1px solid black',
+        display: 'flex',
+        width: 320,
+        flexWrap: 'wrap',
+        margin: '50px auto'
+    }
 
 
 
@@ -180,11 +194,11 @@ export default function Body(props){
             linkto: `/carDetail/${popVal}`
         }).then((err) => {
             db.collection("CarDetails").doc(`${popVal}`).set({
-                color: [{col:'',colname:''}],
-                items: [{img:''}],
-                side: [{head:'',subhead:''}],
-                details: {descrip:[{para:''}]},
-                specs:[{head:'',subhead:[{para:''}]}]
+                color: [],
+                items: [],
+                side: [],
+                details: {descrip:[]},
+                specs:[]
             })
         }).then(() => {
             db.collection("DelArray").doc('0').update({
@@ -200,11 +214,11 @@ export default function Body(props){
             linkto: `/carDetail/${len}`
         }).then((err) => {
             db.collection("CarDetails").doc(`${len}`).set({
-                color: [{col:'',colname:''}],
-                items: [{img:''}],
-                side: [{head:'',subhead:''}],
-                details: {descrip:[{para:''}]},
-                specs:[{head:'',subhead:[{para:''}]}]
+                color: [],
+                items: [],
+                side: [],
+                details: {descrip:[]},
+                specs:[]
             })
         })
     }
@@ -217,15 +231,39 @@ export default function Body(props){
     };
 
 
+    const confirm = useConfirm();
 
-    const handleDelete = (id) => {
-        db.collection("Cars").doc(id).delete().then((err) => {
-            db.collection("CarDetails").doc(id).delete()
-        }).then(()=>{
-            db.collection("DelArray").doc('0').update({
-                val: firebase.firestore.FieldValue.arrayUnion(id)
+    const handleDelete = (id,name) => {
+
+        
+
+        confirm({description: `Delete this car? (${name})`}).then(() => {
+            db.collection("Cars").doc(id).delete().then((err) => {
+                db.collection("CarDetails").doc(id).delete()
+            }).then(()=>{
+                db.collection("DelArray").doc('0').update({
+                    val: firebase.firestore.FieldValue.arrayUnion(id)
+                })
             })
+        }).catch(() =>{
+
         })
+
+
+
+        // if (window.confirm("Are you sure you want to delete?")){
+        // db.collection("Cars").doc(id).delete().then((err) => {
+        //     db.collection("CarDetails").doc(id).delete()
+        // }).then(()=>{
+        //     db.collection("DelArray").doc('0').update({
+        //         val: firebase.firestore.FieldValue.arrayUnion(id)
+        //     })
+        // })
+        // }
+        // else{
+
+        // }
+
     };
 
 
@@ -240,17 +278,52 @@ export default function Body(props){
         document.getElementById("addBut").style.display = '';
         setAll({});
     };
-    
+
+
+    const [pageNumber,setPageNumber] = useState(0);
+
+    const carsPerPage = 6;
+    const pagesVisited = pageNumber * carsPerPage;
+
+    const displayCars = car.slice(pagesVisited, pagesVisited + carsPerPage).map(item => {
+        return (
+            
+            <div style={divstyle}>
+                    
+                   
+                        <div style={{textAlign:'right'}}>
+                            <button style={{position:'absolute',color:'white',border:'none',fontSize:18}} onClick={()=>handleDelete(item.id,item.data.carNam)} id="xBut">X</button>
+                        </div>
+                        <img style={{width:'250px'}} src={item.data.carImg} />
+                        <Link to={item.data.linkto}>
+                            <p style={pstyle}>{item.data.carNam}</p>
+                            </Link>
+                        <p style={pstyle1}>{item.data.carPrice}</p>
+                   
+                        
+            </div>
+            
+        );
+    })
+
+    const pageCount = Math.ceil(car.length / carsPerPage);
+
+    const changePage = ({selected}) => {
+        setPageNumber(selected);
+    }
+
     
     return (
         <main>
-        <h1 style={{textAlign:'center'}}>FEATURED CARS</h1>
+        <h1 style={{textAlign:'center',fontWeight:'bold'}}>FEATURED CARS</h1>
 
         <div style={{textAlign: 'center'}}>
             <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7'}} onClick={handleClick} id="addBut">Add a new car</Button>
         </div>
+        
+        <div style={screen>800?{width:999, margin:'50px auto', border:'1px solid black',display:'none'}:{width:'auto', margin:'50px auto', border:'1px solid black',display:'none'}} id="addCar">
+        
 
-        <div style={{width:999, margin:'50px auto', border:'1px solid black',display:'none'}} id="addCar">
             <h2 style={{textAlign:'center'}}>ADD A NEW CAR</h2>
             <form style={{margin:'30px 30px'}} onSubmit={handleSubmit}>
                 <h3>IMAGE</h3>
@@ -270,26 +343,47 @@ export default function Body(props){
         </div>
 
 
+
+        {screen > 800 ? 
         <div style={body}>
+            
+            {displayCars}
+            <div style={{width:'100%',marginTop: '15px'}}>
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    pageCount={pageCount}
+                    onPageChange={changePage}
+                    containerClassName={"paginationBttns"}
+                    previousLinkClassName={"previousBttn"}
+                    nextLinkClassName={"nextBttn"}
+                    disabledClassName={"paginationDisabled"}
+                    activeClassName={"paginationActive"}
+                    />
+            </div>
+        </div>
+        : 
+
+        <div style={mobBody}>
 
 
-        {car.map(item => {
-            return (
-                <div style={divstyle}>
-                    <div style={{textAlign:'right'}}>
-                        <button style={{position:'absolute',color:'white',border:'none',fontSize:18}} onClick={()=>handleDelete(item.id)} id="xBut">X</button>
-                    </div>
-                    <img style={{width:'250px'}} src={item.data.carImg} />
-                    <Link to={item.data.linkto}>
-                        <p style={pstyle}>{item.data.carNam}</p>
-                        </Link>
-                    <p style={pstyle1}>{item.data.carPrice}</p>
-                    
-                </div>
-            );
-        })}
+            {displayCars}
+            <div style={{width:'100%'}}>
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    pageCount={pageCount}
+                    onPageChange={changePage}
+                    containerClassName={"paginationBttns"}
+                    previousLinkClassName={"previousBttn"}
+                    nextLinkClassName={"nextBttn"}
+                    disabledClassName={"paginationDisabled"}
+                    activeClassName={"paginationActive"}
+                    />
+            </div>
 
         </div>
+        }
         </main>
     );
 }

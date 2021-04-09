@@ -14,21 +14,20 @@ function Main(){
     
     <Router>
       <div>
-        <Header />
-        
-        <Switch>
-        
-        
-       
         <AllDetails>
-          <Route path="/" exact component={Body}/>
-          <Route path="/carDetail/:id" component={CarDetail}/>
-        </AllDetails>
+          <Header />
+          
+          <Switch>
+          
+            
+              <Route path="/" exact component={Body}/>
+              <Route path="/carDetail/:id" component={CarDetail}/>
+            
 
-        </Switch>
-        
-        <Footer />
-        
+          </Switch>
+          
+          <Footer />
+        </AllDetails>
       </div>
     </Router>
   );

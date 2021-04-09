@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Menu from '@material-ui/core/Menu';
+import './index.css';
+import './dropdown.css';
+import { Link, withRouter } from 'react-router-dom';
+import {CarContext} from './allDetails';
+import {GrMenu} from 'react-icons/gr';
 import MenuItem from '@material-ui/core/MenuItem';
-import './index.css'
-import { Link } from 'react-router-dom';
+import Menu from '@material-ui/core/Menu';
+
 
 export default function Header(){
+    const {value,value2} = useContext(CarContext);
+    const [screen,setScreen] = value2;
+    console.log(screen);
+
+
     const headstyle = {
       width: '100%',
       backgroundColor: '#3B5FC7',
@@ -40,105 +49,180 @@ export default function Header(){
     };
 
     
-    function buttonClick(val) {
-      
-      if(val===1){
-      document.getElementById("dropdown").classList.toggle("show");
-     
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl1, setAnchorEl1] = useState(null);
+    const [anchorEl2, setAnchorEl2] = useState(null);
+    const [anchorEl3, setAnchorEl3] = useState(null);
+
+    console.log(anchorEl);
+    console.log(anchorEl1);
+    console.log(anchorEl2);
+    console.log(anchorEl3);
+
+
+    const buttons = [{
+      id:1,
+      dropid:anchorEl,
+      text: "New Cars",
+      details: [{
+        elem: "Find New Cars"
+      },{
+        elem: "Car Comparison"
+      },{
+        elem: "Reviews"
+      }]
+    },
+    {
+      id:2,
+      dropid:anchorEl1,
+      text: "Used Cars",
+      details: [{
+        elem: "Find Used Cars"
+      },{
+        elem: "Sell used car"
+      },{
+        elem: "Reviews"
+      }]
+    },
+    {
+      id:3,
+      dropid:anchorEl2,
+      text: "Bikes",
+      details: [{
+        elem: "Find New bikes"
+      },{
+        elem: "Find Used bikes"
+      },{
+        elem: "Reviews"
+      }]
+    },
+    {
+      id:4,
+      dropid:anchorEl3,
+      text: "Guide",
+      details: [{
+        elem: "Blog"
+      },{
+        elem: "Forum"
+      },{
+        elem: "Videos"
+      }]
+    }];
+
+    const handleClick = (id,event) => {
+      if(id==1){
+        setAnchorEl(event.currentTarget);
       }
-      if(val===2){
-      document.getElementById("dropdown1").classList.toggle("show"); 
-      
+      else if(id==2){
+        setAnchorEl1(event.currentTarget);
       }
-      if(val===3){
-      document.getElementById("dropdown2").classList.toggle("show");
-  
+      else if(id==3){
+        setAnchorEl2(event.currentTarget);
       }
-      if(val===4){
-      document.getElementById("dropdown3").classList.toggle("show");
-     
+      else if(id==4){
+        setAnchorEl3(event.currentTarget);
       }
-     
-    }
+      console.log(anchorEl);
+    };
+
+    const handleClose = (id) => {
+      if(id==1){
+        setAnchorEl(null);
+      }
+      else if(id==2){
+        setAnchorEl1(null);
+      }
+      else if(id==3){
+        setAnchorEl2(null);
+      }
+      else if(id==4){
+        setAnchorEl3(null);
+      }
+    };
    
 
 
-
-    // window.onclick = function(event) {
-    //   if (!event.target.matches('.dropbtn')) {
-    //     var dropdowns = document.getElementsByClassName("dropdown-content");
-    //     var i;
-    //     for (i = 0; i < dropdowns.length; i++) {
-    //       var openDropdown = dropdowns[i];
-    //       if (openDropdown.classList.contains('show')) {
-    //         openDropdown.classList.remove('show');
-    //       }
-    //     }
-    //   }
-    // }
     
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show1");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbttn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content1");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show1')) {
+            openDropdown.classList.remove('show1');
+          }
+        }
+      }
+    }
+
+
     
     return (
       <div style={headstyle}>
         <div style={{flex: '0.4'}}>
-          <Link to="/"><img src="https://wsa1.pakwheels.com/assets/new-pw-logo-white-b8b4c00b25fde9cc8f514dc4947c266a.svg" 
-          alt="pakwheels"
-          style={{height:'70%',width:'70%'}} /></Link>
+          <Link to="/">
+            {screen > 800 ? 
+                <img src="https://wsa1.pakwheels.com/assets/new-pw-logo-white-b8b4c00b25fde9cc8f514dc4947c266a.svg" 
+              alt="pakwheels"
+              style={{height:'70%',width:'70%'}} />
+          :
+                <img style={{height:'100%',width:'100%'}} src="https://wsa1.pakwheels.com/assets/new-pw-logo-white-b8b4c00b25fde9cc8f514dc4947c266a.svg" 
+              alt="pakwheels"/>
+            }
+          </Link>
         </div>
         <div style={{alignSelf: 'center', flex: '0.6',justifyContent: 'space-around', display: 'flex'}}>
           
-          <div>
-            <Button variant="contained" style={headButton} onClick={()=>buttonClick(1)} className="dropbtn">New Cars 
-              <ArrowDropDownIcon style={{position: 'relative',left: 10}} />
+
+
+
+        {screen > 800 ? 
+          buttons.map(item => {
+            return (
+              <div>
+            
+                <Button variant="contained" style={headButton} aria-controls="simple-menu" aria-haspopup="true" onClick={(e)=>handleClick(item.id,e)}>
+                  {item.text}
+                  <ArrowDropDownIcon style={{position: 'relative',left: 10}} />
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={item.dropid}
+                  keepMounted
+                  open={Boolean(item.dropid)}
+                  onClose={()=>handleClose(item.id)}
+                >
+                  {item.details.map(obj => {
+                    return (
+                      <MenuItem onClick={()=>handleClose(item.id)}>{obj.elem}</MenuItem>
+                    );
+                  })}
+                </Menu>
+
+              </div>
               
-              <div>
-                  <ul id="dropdown" className="dropdown-content">
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Find New Cars</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Car Comparison</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Reviews</a></li>
-                  </ul>
-              </div>
-            </Button>
+            );
+          })
+          :
+          <div class="drop">
+            <button onClick={myFunction} class="dropbttn"><GrMenu/></button>
+            <div id="myDropdown" class="dropdown-content1">
+              <a href="#">NEW CARS</a>
+              <a href="#">USED CARS</a>
+              <a href="#">BIKES</a>
+              <a href="#">GUIDE</a>
+            </div>
           </div>
-          
-          <div>
-            <Button variant="contained" style={headButton} onClick={()=>buttonClick(2)} className="dropbtn">Used Cars
-              <ArrowDropDownIcon style={{position: 'relative',left: 10}} />
-              <div>
-                  <ul id="dropdown1" className="dropdown-content">
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Find Used Cars</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Sell your used car</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Reviews</a></li>
-                  </ul>
-              </div>
-            </Button>
-          </div>
-          
-          <div>
-            <Button variant="contained" style={headButton} onClick={()=>buttonClick(3)} className="dropbtn">Bikes
-              <ArrowDropDownIcon style={{position: 'relative',left: 10}} />
-              <div>
-                  <ul id="dropdown2" className="dropdown-content">
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Find New Bikes</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Find Used Bikes</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Sell your bike</a></li>
-                  </ul>
-              </div>
-            </Button>
-          </div>
-          
-          <div>
-            <Button variant="contained" style={headButton} onClick={()=>buttonClick(4)} className="dropbtn">Guide
-              <ArrowDropDownIcon style={{position: 'relative',left: 10}} />
-              <div>
-                  <ul id="dropdown3" className="dropdown-content">
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Blog</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Forum</a></li>
-                      <li style={listitem} id="listitem"><a href="#" style={link}>Videos</a></li>
-                  </ul>
-              </div>
-            </Button>
-          </div>
+          }
+
+
+
           
         </div>
       </div>
