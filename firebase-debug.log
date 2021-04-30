@@ -1,0 +1,192 @@
+[debug] [2021-04-30T12:01:18.723Z] ----------------------------------------------------------------------
+[debug] [2021-04-30T12:01:18.726Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\khali\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2021-04-30T12:01:18.727Z] CLI Version:   9.10.0
+[debug] [2021-04-30T12:01:18.727Z] Platform:      win32
+[debug] [2021-04-30T12:01:18.727Z] Node Version:  v14.15.5
+[debug] [2021-04-30T12:01:18.728Z] Time:          Fri Apr 30 2021 17:01:18 GMT+0500 (Pakistan Standard Time)
+[debug] [2021-04-30T12:01:18.728Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-04-30T12:01:18.736Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-04-30T12:01:18.736Z] > authorizing via signed-in user (zaeemkhaliq1@gmail.com)
+[debug] [2021-04-30T12:01:18.736Z] [iam] checking project pak-wheels-clone for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-04-30T12:01:18.738Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/pak-wheels-clone:testIamPermissions  
+ {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2021-04-30T12:01:20.283Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:19 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1235","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:20.286Z] > refreshing access token with scopes: []
+[debug] [2021-04-30T12:01:20.286Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-04-30T12:01:20.699Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","date":"Fri, 30 Apr 2021 12:01:20 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:20.711Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pak-wheels-clone [none]
+[debug] [2021-04-30T12:01:21.234Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pak-wheels-clone 200
+[debug] [2021-04-30T12:01:21.234Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pak-wheels-clone {"projectId":"pak-wheels-clone","projectNumber":"181728492162","displayName":"Pak Wheels Clone","name":"projects/pak-wheels-clone","resources":{"hostingSite":"pak-wheels-clone","storageBucket":"pak-wheels-clone.appspot.com","locationId":"asia-southeast2"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'pak-wheels-clone'...
+[info] 
+[info] i  deploying firestore, hosting 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2021-04-30T12:01:21.246Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-04-30T12:01:21.246Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-04-30T12:01:21.674Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Fri, 30 Apr 2021 12:01:21 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:21.684Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/pak-wheels-clone:test  
+ {"source":{"files":[{"name":"firestore.rules","content":"rules_version = '2';\n// Allow read/write access to all users under any conditions\n// Warning: **NEVER** use this rule set in production; it allows\n// anyone to overwrite your entire database.\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read, write: if true;\n    }\n  }\n}"}]}}
+[debug] [2021-04-30T12:01:22.843Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:22 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2021-04-30T12:01:22.853Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/pak-wheels-clone/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2021-04-30T12:01:25.264Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:24 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:25.266Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/pak-wheels-clone/releases?pageSize=10&pageToken=  
+ 
+[debug] [2021-04-30T12:01:25.266Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/indexes  
+ 
+[debug] [2021-04-30T12:01:26.292Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:25 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:26.293Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/pak-wheels-clone/rulesets/b22b2a56-ea6c-40aa-b165-f11ee41f2c7f  
+ 
+[debug] [2021-04-30T12:01:27.312Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:26 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  firestore: latest version of firestore.rules already up to date, skipping upload... 
+[debug] [2021-04-30T12:01:27.761Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:27 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:27.763Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false  
+ 
+[debug] [2021-04-30T12:01:30.308Z] <<< HTTP RESPONSE 500 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 30 Apr 2021 12:01:29 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:30.308Z] <<< HTTP RESPONSE BODY {"error":{"code":500,"message":"Internal error encountered.","status":"INTERNAL"}}
+[error] 
+[error] Error: HTTP Error: 500, Internal error encountered.
+[debug] [2021-04-30T12:01:30.710Z] Error Context: {
+  "body": {
+    "error": {
+      "code": 500,
+      "message": "Internal error encountered.",
+      "status": "INTERNAL"
+    }
+  },
+  "response": {
+    "statusCode": 500,
+    "body": {
+      "error": {
+        "code": 500,
+        "message": "Internal error encountered.",
+        "status": "INTERNAL"
+      }
+    },
+    "headers": {
+      "vary": "X-Origin, Referer, Origin,Accept-Encoding",
+      "content-type": "application/json; charset=UTF-8",
+      "date": "Fri, 30 Apr 2021 12:01:29 GMT",
+      "server": "ESF",
+      "cache-control": "private",
+      "x-xss-protection": "0",
+      "x-frame-options": "SAMEORIGIN",
+      "x-content-type-options": "nosniff",
+      "alt-svc": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+      "accept-ranges": "none",
+      "transfer-encoding": "chunked"
+    },
+    "request": {
+      "uri": {
+        "protocol": "https:",
+        "slashes": true,
+        "auth": null,
+        "host": "firestore.googleapis.com",
+        "port": 443,
+        "hostname": "firestore.googleapis.com",
+        "hash": null,
+        "search": "?filter=indexConfig.usesAncestorConfig=false",
+        "query": "filter=indexConfig.usesAncestorConfig=false",
+        "pathname": "/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields",
+        "path": "/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false",
+        "href": "https://firestore.googleapis.com/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false"
+      },
+      "method": "GET"
+    }
+  }
+}
+[debug] [2021-04-30T12:01:39.186Z] ----------------------------------------------------------------------
+[debug] [2021-04-30T12:01:39.188Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\khali\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only firestore
+[debug] [2021-04-30T12:01:39.189Z] CLI Version:   9.10.0
+[debug] [2021-04-30T12:01:39.189Z] Platform:      win32
+[debug] [2021-04-30T12:01:39.189Z] Node Version:  v14.15.5
+[debug] [2021-04-30T12:01:39.190Z] Time:          Fri Apr 30 2021 17:01:39 GMT+0500 (Pakistan Standard Time)
+[debug] [2021-04-30T12:01:39.190Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-04-30T12:01:39.197Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-04-30T12:01:39.197Z] > authorizing via signed-in user (zaeemkhaliq1@gmail.com)
+[debug] [2021-04-30T12:01:39.197Z] [iam] checking project pak-wheels-clone for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2021-04-30T12:01:39.199Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/pak-wheels-clone:testIamPermissions  
+ {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2021-04-30T12:01:40.721Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:40 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1215","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'pak-wheels-clone'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2021-04-30T12:01:40.740Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/pak-wheels-clone:test  
+ {"source":{"files":[{"name":"firestore.rules","content":"rules_version = '2';\n// Allow read/write access to all users under any conditions\n// Warning: **NEVER** use this rule set in production; it allows\n// anyone to overwrite your entire database.\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read, write: if true;\n    }\n  }\n}"}]}}
+[debug] [2021-04-30T12:01:41.739Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:41 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2021-04-30T12:01:41.742Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/pak-wheels-clone/releases?pageSize=10&pageToken=  
+ 
+[debug] [2021-04-30T12:01:41.743Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/indexes  
+ 
+[debug] [2021-04-30T12:01:42.735Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:42 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:42.740Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/pak-wheels-clone/rulesets/b22b2a56-ea6c-40aa-b165-f11ee41f2c7f  
+ 
+[debug] [2021-04-30T12:01:43.775Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  firestore: latest version of firestore.rules already up to date, skipping upload... 
+[debug] [2021-04-30T12:01:44.251Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 30 Apr 2021 12:01:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:44.253Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false  
+ 
+[debug] [2021-04-30T12:01:46.751Z] <<< HTTP RESPONSE 500 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 30 Apr 2021 12:01:46 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-30T12:01:46.752Z] <<< HTTP RESPONSE BODY {"error":{"code":500,"message":"Internal error encountered.","status":"INTERNAL"}}
+[error] 
+[error] Error: HTTP Error: 500, Internal error encountered.
+[debug] [2021-04-30T12:01:47.150Z] Error Context: {
+  "body": {
+    "error": {
+      "code": 500,
+      "message": "Internal error encountered.",
+      "status": "INTERNAL"
+    }
+  },
+  "response": {
+    "statusCode": 500,
+    "body": {
+      "error": {
+        "code": 500,
+        "message": "Internal error encountered.",
+        "status": "INTERNAL"
+      }
+    },
+    "headers": {
+      "vary": "X-Origin, Referer, Origin,Accept-Encoding",
+      "content-type": "application/json; charset=UTF-8",
+      "date": "Fri, 30 Apr 2021 12:01:46 GMT",
+      "server": "ESF",
+      "cache-control": "private",
+      "x-xss-protection": "0",
+      "x-frame-options": "SAMEORIGIN",
+      "x-content-type-options": "nosniff",
+      "alt-svc": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+      "accept-ranges": "none",
+      "transfer-encoding": "chunked"
+    },
+    "request": {
+      "uri": {
+        "protocol": "https:",
+        "slashes": true,
+        "auth": null,
+        "host": "firestore.googleapis.com",
+        "port": 443,
+        "hostname": "firestore.googleapis.com",
+        "hash": null,
+        "search": "?filter=indexConfig.usesAncestorConfig=false",
+        "query": "filter=indexConfig.usesAncestorConfig=false",
+        "pathname": "/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields",
+        "path": "/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false",
+        "href": "https://firestore.googleapis.com/v1/projects/pak-wheels-clone/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false"
+      },
+      "method": "GET"
+    }
+  }
+}
