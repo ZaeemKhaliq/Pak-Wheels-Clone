@@ -8,26 +8,30 @@ import {CarDetail} from './carDetail';
 import AddCar from './addCar';
 import {AllDetails} from './allDetails'
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
+import store from './Store/store';
+import { Provider } from 'react-redux';
 
 function Main(){
   return (
     
     <Router>
       <div>
-        <AllDetails>
-          <Header />
-          
-          <Switch>
-          
+        <Provider store={store}>
+          <AllDetails>
+            <Header />
             
-              <Route path="/" exact component={Body}/>
-              <Route path="/carDetail/:id" component={CarDetail}/>
+            <Switch>
             
+              
+                <Route path="/" exact component={Body}/>
+                <Route path="/carDetail/:id" component={CarDetail}/>
+              
 
-          </Switch>
-          
-          <Footer />
-        </AllDetails>
+            </Switch>
+            
+            <Footer />
+          </AllDetails>
+        </Provider>
       </div>
     </Router>
   );

@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { useSelector } from 'react-redux';
 
 
 export const CarDetail = props => {
@@ -73,14 +76,15 @@ const headings = {
 
   const {value,value2} = useContext(CarContext);
 
-  const [allDetails, setAlldetails] = value;
+  
 
   const [screen,setScreen] = value2;
 
+  const allDetails = useSelector(state => state.carSlice);
 
-  console.log(screen);
-  console.log(allDetails);
+  console.log(screen);  
   console.log(num);
+  console.log(allDetails);
 
   
 
@@ -214,6 +218,8 @@ const headings = {
           col: attributes.col,
           colname: attributes.colname
         })
+      }).then(() => {
+        setOpen1(true);
       })
     }
 
@@ -228,7 +234,7 @@ const headings = {
           img: attributes.img
         })
       }).then(() => {
-        alert("Image Added Successfully!");
+        setOpen1(true);
       })
     }
 
@@ -242,6 +248,8 @@ const headings = {
           head: attributes.head,
           subhead: attributes.subhead
         })
+      }).then(() => {
+        setOpen1(true);
       })
     }
 
@@ -255,6 +263,8 @@ const headings = {
             para: attributes.descrip
         })
       
+      }).then(() => {
+        setOpen1(true);
       })
     }
 
@@ -289,8 +299,8 @@ const headings = {
     else{
     db.collection("CarDetails").doc(`${num}`).update({
       specs: specArr
-    }).then((success) => {
-    alert(success);
+    }).then(() => {
+      setOpen1(true);
     })
   }
 
@@ -317,12 +327,43 @@ const headings = {
 
 
 
+  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleClose1 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen1(false);
+  };
+
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+
+
+
+
   const handleDeleteImg = (img) =>{
     db.collection("CarDetails").doc(`${num}`).update({
       items: firebase.firestore.FieldValue.arrayRemove({
         img:img
       })
+    }).then(()=>{
+      setOpen(true);
     })
+
+    
   }
 
   const handleDeletePara = (para) =>{
@@ -330,7 +371,10 @@ const headings = {
       ['details.descrip']: firebase.firestore.FieldValue.arrayRemove({
         para: para
     })
+    }).then(()=>{
+      setOpen(true);
     })
+
   }
 
   const handleDeleteColor = (col,colname) =>{
@@ -339,7 +383,10 @@ const headings = {
         col: col,
         colname:colname
     })
+    }).then(()=>{
+      setOpen(true);
     })
+
   }
 
   const handleDeleteSide = (head,subhead) =>{
@@ -348,7 +395,10 @@ const headings = {
         head: head,
         subhead:subhead
     })
+    }).then(()=>{
+      setOpen(true);
     })
+
   }
 
   const handleDeleteSpecs = (head,subhead) =>{
@@ -357,7 +407,10 @@ const headings = {
         head: head,
         subhead:subhead
     })
+    }).then(()=>{
+      setOpen(true);
     })
+
   }
 
 
@@ -445,6 +498,8 @@ const headings = {
                           <button style={{color:'white',border:'none',fontSize:18}} id="xBut" onClick={()=>handleDeleteImg(obj.img)}>X</button>
                         </div>
                         <img style={{width: '80%'}} key={obj.id} src={obj.img} />
+
+                        
                       </div>
                     );
                     })}
@@ -457,6 +512,33 @@ const headings = {
           </div>
           {/* CAROUSEL ENDS */}
 
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            >
+            <Alert onClose={handleClose} severity="success" style={{backgroundColor:'#f44336'}}>
+              Deleted Successfully!
+            </Alert>
+          </Snackbar>
+
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={open1}
+            autoHideDuration={3000}
+            onClose={handleClose1}
+            >
+            <Alert onClose={handleClose1} severity="success">
+              Added Successfully!
+            </Alert>
+          </Snackbar>
 
 
           {/* DESCRIPTION STARTS */}

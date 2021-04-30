@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Link } from 'react-router-dom';
@@ -9,12 +9,18 @@ import firebase from 'firebase';
 import Fade from 'react-reveal/Fade';
 import { useConfirm } from 'material-ui-confirm';
 import ReactPaginate from 'react-paginate';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 export default function Body(props){
 
     const {value,value2} = useContext(CarContext);
     const [screen,setScreen] = value2;
     console.log(screen);
+
+    const addBut = useRef(null);
+    const addCar = useRef(null);
+    
 
     
     const body = {
@@ -146,6 +152,22 @@ export default function Body(props){
     
 
 
+
+    const [open, setOpen] = useState(false);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+    };
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
+
+
+
     const [all, setAll] = useState({img:'',nam:'',price:''});
 
     const handleChange = (e) => {
@@ -193,6 +215,7 @@ export default function Body(props){
             carPrice: attributes.price,
             linkto: `/carDetail/${popVal}`
         }).then((err) => {
+            setOpen(true);
             db.collection("CarDetails").doc(`${popVal}`).set({
                 color: [],
                 items: [],
@@ -213,29 +236,30 @@ export default function Body(props){
             carPrice: attributes.price,
             linkto: `/carDetail/${len}`
         }).then((err) => {
+            setOpen(true);
+
             db.collection("CarDetails").doc(`${len}`).set({
                 color: [],
                 items: [],
                 side: [],
                 details: {descrip:[]},
                 specs:[]
-            })
+            });
         })
     }
 
 
 
         setAll({img:'',nam:'',price:''});
-        document.getElementById("addCar").style.display = 'none';
-        document.getElementById("addBut").style.display = '';
+        
+        addCar.current.style.display = 'none';
+        addBut.current.style.display = '';
     };
 
 
     const confirm = useConfirm();
 
     const handleDelete = (id,name) => {
-
-        
 
         confirm({description: `Delete this car? (${name})`}).then(() => {
             db.collection("Cars").doc(id).delete().then((err) => {
@@ -269,13 +293,16 @@ export default function Body(props){
 
 
     const handleClick = () => {
-        document.getElementById("addCar").style.display = 'block';
-        document.getElementById("addBut").style.display = 'none';
+      
+        addBut.current.style.display = 'block';
+        addCar.current.style.display = 'none';
     };
 
     const handleCancel = () => {
-        document.getElementById("addCar").style.display = 'none';
-        document.getElementById("addBut").style.display = '';
+        
+        addBut.current.style.display = 'none';
+        addCar.current.style.display = '';
+
         setAll({});
     };
 
@@ -318,10 +345,10 @@ export default function Body(props){
         <h1 style={{textAlign:'center',fontWeight:'bold'}}>FEATURED CARS</h1>
 
         <div style={{textAlign: 'center'}}>
-            <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7'}} onClick={handleClick} id="addBut">Add a new car</Button>
+            <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7'}} onClick={handleClick} id="addBut" ref={addCar}>Add a new car</Button>
         </div>
         
-        <div style={screen>800?{width:999, margin:'50px auto', border:'1px solid black',display:'none'}:{width:'auto', margin:'50px auto', border:'1px solid black',display:'none'}} id="addCar">
+        <div style={screen>800?{width:999, margin:'50px auto', border:'1px solid black',display:'none'}:{width:'auto', margin:'50px auto', border:'1px solid black',display:'none'}} id="addCar" ref={addBut}>
         
 
             <h2 style={{textAlign:'center'}}>ADD A NEW CAR</h2>
@@ -336,12 +363,26 @@ export default function Body(props){
                 <br></br>
                 <br></br>
                 <div style={{display: 'flex',justifyContent:'space-around'}}>
-                    <input type="submit" value="ADD THE CAR" style={inputButton}/>
-                    <input type="button" value="CANCEL" onClick={handleCancel} style={inputButton}/>
+                    <input type="submit" value="ADD THE CAR" style={inputButton} />
+                    <input type="button" value="CANCEL" onClick={handleCancel} style={inputButton} />
                 </div>
             </form>
         </div>
 
+
+        <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            >
+            <Alert onClose={handleClose} severity="success">
+              Added Successfully!
+            </Alert>
+        </Snackbar>
 
 
         {screen > 800 ? 

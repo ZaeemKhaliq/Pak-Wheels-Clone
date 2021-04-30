@@ -14,7 +14,7 @@ import Menu from '@material-ui/core/Menu';
 export default function Header(){
     const {value,value2} = useContext(CarContext);
     const [screen,setScreen] = value2;
-    console.log(screen);
+
 
 
     const headstyle = {
@@ -54,10 +54,7 @@ export default function Header(){
     const [anchorEl2, setAnchorEl2] = useState(null);
     const [anchorEl3, setAnchorEl3] = useState(null);
 
-    console.log(anchorEl);
-    console.log(anchorEl1);
-    console.log(anchorEl2);
-    console.log(anchorEl3);
+   
 
 
     const buttons = [{
