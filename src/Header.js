@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { Link, withRouter } from 'react-router-dom';
+
+import {CarContext} from './allDetails';
+import { auth } from './firebase';
+
 import './index.css';
 import './dropdown.css';
-import { Link, withRouter } from 'react-router-dom';
-import {CarContext} from './allDetails';
+
+
 import {GrMenu} from 'react-icons/gr';
+import Button from '@material-ui/core/Button';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
@@ -16,6 +21,12 @@ export default function Header(){
     const [screen,setScreen] = value2;
     console.log(screen);
 
+    const logoutClick = (event) => {
+      event.preventDefault();
+      auth.signOut().then(() => {
+        console.log("User signed out");
+      })
+    }
 
     const headstyle = {
       width: '100%',
@@ -53,11 +64,6 @@ export default function Header(){
     const [anchorEl1, setAnchorEl1] = useState(null);
     const [anchorEl2, setAnchorEl2] = useState(null);
     const [anchorEl3, setAnchorEl3] = useState(null);
-
-    console.log(anchorEl);
-    console.log(anchorEl1);
-    console.log(anchorEl2);
-    console.log(anchorEl3);
 
 
     const buttons = [{
@@ -221,7 +227,10 @@ export default function Header(){
           </div>
           }
 
-
+          <Link to="/authenticate">
+            <Button style={headButton} variant="contained" className="login-button">LOGIN</Button>
+            <Button style={headButton} variant="contained" className="logout-button" onClick={logoutClick}>LOGOUT</Button>
+          </Link>
 
           
         </div>

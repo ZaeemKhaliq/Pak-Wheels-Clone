@@ -1,134 +1,140 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
 
 /* #instagram{ 
   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); 
     background: -webkit-radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); 
   } */
-  
-  #instagram {
-    position: relative;
-    border-radius: 20%;
-    background: radial-gradient(circle at 33% 100%, #fed373 4%, #f15245 30%, #d92e7f 62%, #9b36b7 85%, #515ecf)
-  }
-  #instagram:after,
-  #instagram:before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 25px;
-    height: 25px;
-    border: 2px solid #fff;
-    transform: translate(-50%, -50%);
-    content: ''
-  }
-  #instagram:before {
-    border-radius: 20%
-  }
-  #instagram:after {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%
-  }
 
-  .show{
-    display:block !important;
-  }
-  
-  .dropdown-content{
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    color: white;
-    background-color: rgb(59, 95, 199);
-    display: none;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 40px;
-    transition-property: all;
-    transition-duration: 0.5s;
-  }
-  
+#instagram {
+  position: relative;
+  border-radius: 20%;
+  background: radial-gradient(
+    circle at 33% 100%,
+    #fed373 4%,
+    #f15245 30%,
+    #d92e7f 62%,
+    #9b36b7 85%,
+    #515ecf
+  );
+}
+#instagram:after,
+#instagram:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #fff;
+  transform: translate(-50%, -50%);
+  content: "";
+}
+#instagram:before {
+  border-radius: 20%;
+}
+#instagram:after {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
 
-  #listitem{
-    transition-property: background-color;
-    transition-duration: 0.2s;
-  }
-  #listitem:hover {
-    background-color: rgb(39, 69, 160);
-  }
+.show {
+  display: block !important;
+}
 
-  .dropbtn {
-    z-index:5;
-  }
+.dropdown-content {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: white;
+  background-color: rgb(59, 95, 199);
+  display: none;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 40px;
+  transition-property: all;
+  transition-duration: 0.5s;
+}
 
+#listitem {
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+#listitem:hover {
+  background-color: rgb(39, 69, 160);
+}
 
+.dropbtn {
+  z-index: 5;
+}
 
-  #xBut{
-    background-color: #ED2121;
-    transition-property: background-color;
-    transition-duration: 0.5s;
-  }
+.login-button {
+  background-color: black !important;
+}
 
-  #xBut:hover {
-    cursor: pointer;
-    background-color: rgb(184, 12, 12);
-  }
+#xBut {
+  background-color: #ed2121;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
 
-  #xBut1{
-    cursor:none;
-  }
-  #xBut1:hover{
-    cursor:pointer;
-  }
+#xBut:hover {
+  cursor: pointer;
+  background-color: rgb(184, 12, 12);
+}
 
-  .paginationBttns {
-    height: 40px;
-    list-style:none;
-    display: flex;
-    justify-content: center;
-    padding:0;
-  }
+#xBut1 {
+  cursor: none;
+}
+#xBut1:hover {
+  cursor: pointer;
+}
 
-  .paginationBttns a {
-    padding: 7px 10px;
-    margin: 8px;
-    border-radius: 2px;
-    border: 1px solid rgb(59, 95, 199);
-    color: rgb(59, 95, 199);
-    cursor: pointer;
-  }
+.paginationBttns {
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
 
-  .paginationBttns a:hover{
-    color: white;
-    background-color: rgb(59, 95, 199);
-    text-decoration: none;
-  }
+.paginationBttns a {
+  padding: 7px 10px;
+  margin: 8px;
+  border-radius: 2px;
+  border: 1px solid rgb(59, 95, 199);
+  color: rgb(59, 95, 199);
+  cursor: pointer;
+}
 
-  .paginationActive a {
-    color: white;
-    background-color: rgb(59, 95, 199);
-  }
+.paginationBttns a:hover {
+  color: white;
+  background-color: rgb(59, 95, 199);
+  text-decoration: none;
+}
 
-  .paginationDisabled {
-    pointer-events: none;
-  }
+.paginationActive a {
+  color: white;
+  background-color: rgb(59, 95, 199);
+}
 
+.paginationDisabled {
+  pointer-events: none;
+}

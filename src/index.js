@@ -1,19 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
+
+import {CarDetail} from './carDetail';
+import {AllDetails} from './allDetails';
+
 import Header from './Header';
 import Footer from './Footer';
 import Body from './Body';
-import {CarDetail} from './carDetail';
-import AddCar from './addCar';
-import {AllDetails} from './allDetails'
-import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
+import AuthForm from './Forms/AuthForm';
+import Auth from './Auth';
+
+import './index.css';
 
 function Main(){
   return (
     
     <Router>
       <div>
+        <Auth />
         <AllDetails>
           <Header />
           
@@ -22,7 +27,7 @@ function Main(){
             
               <Route path="/" exact component={Body}/>
               <Route path="/carDetail/:id" component={CarDetail}/>
-            
+              <Route path="/authenticate" component={AuthForm}/>
 
           </Switch>
           

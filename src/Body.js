@@ -14,7 +14,7 @@ export default function Body(props){
 
     const {value,value2} = useContext(CarContext);
     const [screen,setScreen] = value2;
-    console.log(screen);
+    // console.log(screen);
 
     
     const body = {
@@ -114,9 +114,9 @@ export default function Body(props){
 
     const len = Object.keys(car).length;
     const lenInString = len.toString();
-    console.log(car);
-    console.log(len);
-    console.log(lenInString);
+    // console.log(car);
+    // console.log(len);
+    // console.log(lenInString);
 
     
 

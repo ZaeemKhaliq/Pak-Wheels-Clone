@@ -1,12 +1,16 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import Carousel from 'react-elastic-carousel';
-import {CarContext} from './allDetails'
+
+import {CarContext} from './allDetails';
 import {db} from './firebase';
-import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
+
+import Carousel from 'react-elastic-carousel';
+
+import './index.css';
+
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 

@@ -1,0 +1,60 @@
+.main-container {
+}
+
+.form-container {
+  padding: 5rem;
+}
+
+.form-block {
+  border: 1px solid black;
+  width: 50%;
+  margin: 0 auto;
+
+  .title {
+    text-align: center;
+  }
+}
+
+.form {
+  width: 80%;
+  margin: 1rem auto;
+}
+
+.form-inputs {
+  height: 2rem;
+  width: 15rem;
+  font-size: 1rem;
+}
+
+.login-but-div {
+  text-align: center;
+}
+
+.login-but {
+  background-color: rgb(59, 95, 199) !important;
+  color: white !important;
+
+  &:hover {
+    background-color: rgb(37, 72, 175) !important;
+  }
+}
+
+.form-footer {
+  text-align: center;
+
+  & > p:nth-child(2) {
+    cursor: pointer;
+  }
+}
+
+.signup-but {
+  @extend .login-but;
+  padding: 0.6rem 0.9rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Roboto";
+}
