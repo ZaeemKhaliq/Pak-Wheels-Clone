@@ -1,8 +1,14 @@
 .main-container {
 }
 
+.login-message {
+  text-align: center;
+  margin: 0;
+  margin-top: 2rem;
+}
+
 .form-container {
-  padding: 5rem;
+  padding: 3rem 5rem;
 }
 
 .form-block {
@@ -44,6 +50,7 @@
 
   & > p:nth-child(2) {
     cursor: pointer;
+    font-weight: bolder;
   }
 }
 

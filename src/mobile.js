@@ -6,7 +6,7 @@ export const MobContext = createContext();
 export function Mobile(props){
 
     const [screen,setScreen] = useState(null);
-
+    console.log(screen);
 
     const changed = () =>{
         setScreen(window.innerWidth);

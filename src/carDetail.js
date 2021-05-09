@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import {CarContext} from './allDetails';
+import { CarContext } from './allDetails';
+import { MobContext } from './mobile';
+import { AuthContext } from './Auth';
+
 import {db} from './firebase';
 import firebase from 'firebase';
 
@@ -75,11 +78,13 @@ const headings = {
   const num = props.match.params.id;
 
 
-  const {value,value2} = useContext(CarContext);
+  const {value} = useContext(CarContext);
 
   const [allDetails, setAlldetails] = value;
 
-  const [screen,setScreen] = value2;
+  const [screen,setScreen] = useContext(MobContext);
+
+  const [flag, setFlag] = useContext(AuthContext);
 
 
   console.log(screen);
@@ -368,10 +373,14 @@ const headings = {
 
    return (  
     <main>
-
+    
+    {flag == true ? 
     <div style={{textAlign: 'center'}}>
     <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7',marginTop:50}} onClick={handleClick} id="addBut">Add Details</Button>
     </div>
+    :
+    null
+    }
 
     <div id="addDetails" style={{display:'none'}}>
       <h1 style={{textAlign:'center'}}>ADD DETAILS OF THE CAR!</h1>
@@ -445,9 +454,13 @@ const headings = {
                       
                     return (
                       <div>
+                        {flag == true ? 
                         <div style={{textAlign:'right'}}>
                           <button style={{color:'white',border:'none',fontSize:18}} id="xBut" onClick={()=>handleDeleteImg(obj.img)}>X</button>
                         </div>
+                        :
+                        null
+                        }
                         <img style={{width: '80%'}} key={obj.id} src={obj.img} />
                       </div>
                     );
@@ -474,9 +487,13 @@ const headings = {
                   item.data.details.descrip.map(obj => {
                     return (
                       <div>
+                        {flag == true ? 
                         <div style={{textAlign:'right'}}>
                           <button style={{color:'red',border:'none',fontSize:14,height:14,width:18,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeletePara(obj.para)}>X</button>
                         </div>
+                        :
+                        null
+                        }
                         <p style={screen > 800 ? {color:'black'} : {color:'black',fontSize:12}}>{obj.para}</p>
                       </div>
                     );
@@ -506,9 +523,13 @@ const headings = {
                     item.data.color.map(obj => {
                       return (
                         <div style={{textAlign: 'center'}}>
+                          {flag == true ? 
                           <div style={{textAlign:'right'}}>
                             <button style={{color:'red',border:'none',fontSize:12,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteColor(obj.col,obj.colname)}>X</button>
                           </div>
+                          :
+                          null
+                          }
                           <FiberManualRecordIcon style={{color: obj.col,fontSize:90}}></FiberManualRecordIcon>
                           <p style={{margin:0}}>{obj.colname}</p>
                         </div>
@@ -542,9 +563,13 @@ const headings = {
                     item.data.specs.map(obj => {
                       return (
                         <>
+                        {flag == true ? 
                         <div style={{textAlign:'right'}}>
-                              <button style={{color:'red',border:'none',fontSize:14,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteSpecs(obj.head,obj.subhead)}>X</button>
-                            </div>
+                          <button style={{color:'red',border:'none',fontSize:14,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteSpecs(obj.head,obj.subhead)}>X</button>
+                        </div>
+                        :
+                        null
+                        }
                         <h4 style={{fontWeight:'bolder'}}>{obj.head}</h4>
                         {obj.subhead.map(para => {
                           return (
@@ -587,10 +612,14 @@ const headings = {
                       return (
                         <div>
                           <div style={sidetab}>
+                            {flag == true ? 
                             <div style={{textAlign:'right'}}>
                               {/* <button style={{color:'red',border:'none',fontSize:14,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteSide(obj.head,obj.subhead)}>X</button> */}
                               <DeleteForeverIcon onClick={()=>handleDeleteSide(obj.head,obj.subhead)} style={{position:'absolute',cursor:'pointer'}}></DeleteForeverIcon>
                             </div>
+                            :
+                            null
+                            }
                             <p style={p}>{obj.head}</p>
                           </div>
                           <p style={{textAlign: 'center',fontSize: 22,fontWeight:'bold',fontFamily:'News Cycle,sans-serif',color:'black'}}>{obj.subhead}</p>

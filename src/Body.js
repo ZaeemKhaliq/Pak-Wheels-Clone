@@ -1,21 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+
+import { MobContext } from './mobile';
+import { AuthContext } from './Auth';
+
 import {db} from './firebase';
-import { AllDetails, CarContext } from './allDetails';
 import firebase from 'firebase';
+
+import './index.css';
+
+import Button from '@material-ui/core/Button';
+
+import ReactPaginate from 'react-paginate';
 import Fade from 'react-reveal/Fade';
 import { useConfirm } from 'material-ui-confirm';
-import ReactPaginate from 'react-paginate';
+
 
 export default function Body(props){
 
-    const {value,value2} = useContext(CarContext);
-    const [screen,setScreen] = value2;
+    const [screen,setScreen] = useContext(MobContext);
     // console.log(screen);
 
+    const [flag, setFlag] = useContext(AuthContext);
     
     const body = {
         margin: '50px auto',
@@ -290,10 +296,13 @@ export default function Body(props){
             
             <div style={divstyle}>
                     
-                   
+                        {flag == true?
                         <div style={{textAlign:'right'}}>
                             <button style={{position:'absolute',color:'white',border:'none',fontSize:18}} onClick={()=>handleDelete(item.id,item.data.carNam)} id="xBut">X</button>
                         </div>
+                        :
+                        null
+                        }
                         <img style={{width:'250px'}} src={item.data.carImg} />
                         <Link to={item.data.linkto}>
                             <p style={pstyle}>{item.data.carNam}</p>
@@ -317,9 +326,13 @@ export default function Body(props){
         <main>
         <h1 style={{textAlign:'center',fontWeight:'bold'}}>FEATURED CARS</h1>
 
+        {flag == true? 
         <div style={{textAlign: 'center'}}>
             <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7'}} onClick={handleClick} id="addBut">Add a new car</Button>
         </div>
+        :
+        null
+        }
         
         <div style={screen>800?{width:999, margin:'50px auto', border:'1px solid black',display:'none'}:{width:'auto', margin:'50px auto', border:'1px solid black',display:'none'}} id="addCar">
         

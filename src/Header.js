@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
-import ReactDOM from 'react-dom';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory, withRouter } from 'react-router-dom';
 
-import {CarContext} from './allDetails';
+
+import { MobContext } from './mobile';
+import { AuthContext } from './Auth';
+
 import { auth } from './firebase';
 
 import './index.css';
@@ -16,17 +18,25 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 
-export default function Header(){
-    const {value,value2} = useContext(CarContext);
-    const [screen,setScreen] = value2;
+function Header(){
+
+    const [screen,setScreen] = useContext(MobContext);
     console.log(screen);
+
+    const [flag,setFlag] = useContext(AuthContext);
+    
+
+    const history = useHistory();
 
     const logoutClick = (event) => {
       event.preventDefault();
       auth.signOut().then(() => {
         console.log("User signed out");
+        history.push('/');
       })
     }
+
+
 
     const headstyle = {
       width: '100%',
@@ -227,9 +237,12 @@ export default function Header(){
           </div>
           }
 
-          <Link to="/authenticate">
-            <Button style={headButton} variant="contained" className="login-button">LOGIN</Button>
+          <Link to="/authenticate" style={{textDecoration:'none'}}>
+            {flag == false ? 
+            <Button style={headButton} variant="contained" className="login-button">LOGIN</Button> 
+            :
             <Button style={headButton} variant="contained" className="logout-button" onClick={logoutClick}>LOGOUT</Button>
+            }
           </Link>
 
           
@@ -237,3 +250,5 @@ export default function Header(){
       </div>
     );
   }
+
+  export default withRouter(Header);

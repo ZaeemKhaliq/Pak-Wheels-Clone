@@ -22,6 +22,7 @@ export default function AuthForm(){
     return (
         <>
             <div className="main-container">
+                <p className="login-message">Login to account in order to add/delete or update cars or their details.</p>
                 <div className="form-container">
                     <div className="form-block">
                         {mode == 'login' ? <Login /> : <Signup/>}
