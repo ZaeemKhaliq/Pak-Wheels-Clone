@@ -10,6 +10,8 @@ export const AllDetails = (props) =>{
 
   
     const [allDetails, setAlldetails] = useState([]);
+    const [users, setUsers] = useState([]);
+  
     
     useEffect(() => {
 
@@ -23,11 +25,19 @@ export const AllDetails = (props) =>{
 					
 			})
 
+      db.collection("Users").onSnapshot((snapShot) => {
+        setUsers(snapShot.docs.map(doc => ({
+            id: doc.id,
+            data: doc.data()
+            })
+        ))
+    })
+
     },[]);
     
     return(
         <div>
-        <CarContext.Provider value={{value: [allDetails, setAlldetails]}}>
+        <CarContext.Provider value={{value: [allDetails, setAlldetails], value1: [users, setUsers]}}>
             <ConfirmProvider>
               {props.children}
             </ConfirmProvider>

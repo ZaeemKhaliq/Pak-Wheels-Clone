@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { MobContext } from './mobile';
 import { AuthContext } from './Auth';
+import { CarContext } from './allDetails';
 
 import {db} from './firebase';
 import firebase from 'firebase';
@@ -21,7 +22,17 @@ export default function Body(props){
     const [screen,setScreen] = useContext(MobContext);
     // console.log(screen);
 
-    const [flag, setFlag] = useContext(AuthContext);
+    const { val, val1 } = useContext(AuthContext);
+    
+    const [flag,setFlag] = val;
+
+    const [user, setUser] = val1;
+    console.log(user);
+
+
+    const {value1} = useContext(CarContext);
+    const [users, setUsers] = value1;
+    console.log(users);
     
     const body = {
         margin: '50px auto',
@@ -79,6 +90,7 @@ export default function Body(props){
 
     const [car, setCar] = useState([]);
     const [delVal, setDelVal] = useState([]);
+    
 
     useEffect(() => {
         // db.collection('Cars').get().then((snapShot) => {
@@ -114,7 +126,6 @@ export default function Body(props){
 					
 			})        
 
-            
     },[]);
 
 
@@ -322,9 +333,32 @@ export default function Body(props){
     }
 
     
+    
     return (
         <main>
-        <h1 style={{textAlign:'center',fontWeight:'bold'}}>FEATURED CARS</h1>
+        <div>
+
+            {user ? 
+            <div style={{display:'flex',width:'90%',alignItems:'flex-end',flexDirection:'column'}}>
+                <p style={{margin:0}}>Logged in as</p>
+                {users.map(item=>{
+                    return (
+                        <>
+                            {item.data.user.map(obj=>{
+                            return (
+                                <p style={{fontWeight:700,margin:0}}>{obj.email == user.email ? obj.name : null}</p>
+                            )
+                            })}
+                        </>
+                    )
+                })}
+            </div>
+            :
+            null
+            }
+
+            <h1 style={{textAlign:'center',fontWeight:'bold'}}>FEATURED CARS</h1>
+        </div>
 
         {flag == true? 
         <div style={{textAlign: 'center'}}>

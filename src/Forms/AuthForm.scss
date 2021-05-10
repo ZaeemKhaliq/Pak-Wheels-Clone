@@ -26,9 +26,13 @@
   margin: 1rem auto;
 }
 
+.field-division {
+  width: 100%;
+}
+
 .form-inputs {
   height: 2rem;
-  width: 15rem;
+  width: 100%;
   font-size: 1rem;
 }
 
@@ -39,6 +43,7 @@
 .login-but {
   background-color: rgb(59, 95, 199) !important;
   color: white !important;
+  width: 5rem;
 
   &:hover {
     background-color: rgb(37, 72, 175) !important;
@@ -56,7 +61,7 @@
 
 .signup-but {
   @extend .login-but;
-  padding: 0.6rem 0.9rem;
+  padding: 0.4rem 0.9rem;
   cursor: pointer;
   outline: none;
   border: none;
@@ -64,4 +69,14 @@
   font-size: 14px;
   font-weight: 500;
   font-family: "Roboto";
+  height: 2.3rem;
+}
+
+@media screen and (max-width: 800px) {
+  .form-block {
+    width: 100%;
+  }
+  .form-container {
+    padding: 3rem 3rem;
+  }
 }

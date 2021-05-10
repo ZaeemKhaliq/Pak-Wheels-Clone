@@ -84,7 +84,8 @@ const headings = {
 
   const [screen,setScreen] = useContext(MobContext);
 
-  const [flag, setFlag] = useContext(AuthContext);
+  const { val } = useContext(AuthContext)
+  const [flag, setFlag] = val;
 
 
   console.log(screen);

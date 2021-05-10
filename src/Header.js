@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory, withRouter } from 'react-router-dom';
 
 
@@ -6,6 +6,8 @@ import { MobContext } from './mobile';
 import { AuthContext } from './Auth';
 
 import { auth } from './firebase';
+import {db} from './firebase';
+import firebase from 'firebase';
 
 import './index.css';
 import './dropdown.css';
@@ -21,10 +23,10 @@ import Menu from '@material-ui/core/Menu';
 function Header(){
 
     const [screen,setScreen] = useContext(MobContext);
-    console.log(screen);
 
-    const [flag,setFlag] = useContext(AuthContext);
-    
+    const { val } = useContext(AuthContext);
+    const [flag,setFlag] = val;
+    console.log(flag);
 
     const history = useHistory();
 
@@ -48,25 +50,6 @@ function Header(){
       backgroundColor: 'transparent',
       color: 'white', 
       border: '2px solid black'
-    };
-    const ulstyle = {
-        listStyle: 'none',
-        padding: 0,
-        margin: 0,
-        color: 'white',
-        backgroundColor: 'rgb(59, 95, 199)',
-        display: 'none',
-        position: 'absolute'
-    };
-    const link = {
-      textDecoration: 'none',
-      color: 'white'
-    };
-    const listitem = {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: 40
     };
 
     
@@ -193,7 +176,7 @@ function Header(){
             }
           </Link>
         </div>
-        <div style={{alignSelf: 'center', flex: '0.6',justifyContent: 'space-around', display: 'flex'}}>
+        <div style={{alignSelf: 'center', flex: '0.6',justifyContent: screen > 800 ? 'space-around' : 'flex-end', display: 'flex'}}>
           
 
 
@@ -237,13 +220,15 @@ function Header(){
           </div>
           }
 
-          <Link to="/authenticate" style={{textDecoration:'none'}}>
-            {flag == false ? 
-            <Button style={headButton} variant="contained" className="login-button">LOGIN</Button> 
-            :
-            <Button style={headButton} variant="contained" className="logout-button" onClick={logoutClick}>LOGOUT</Button>
-            }
-          </Link>
+          <div>
+            <Link to="/authenticate" style={{textDecoration:'none'}}>
+              {flag == false ? 
+              <Button style={headButton} variant="contained" className="login-button">LOGIN</Button> 
+              :
+              <Button style={headButton} variant="contained" className="logout-button" onClick={logoutClick}>LOGOUT</Button>
+              }
+            </Link>
+          </div>
 
           
         </div>
