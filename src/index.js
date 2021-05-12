@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 
-import { CarDetail } from './carDetail';
+import { CarDetail } from './CarDetail';
 import { AllDetails } from './allDetails';
 import { Mobile } from './mobile';
 

@@ -85,11 +85,6 @@ code {
   z-index: 5;
 }
 
-.login-button,
-.logout-button {
-  background-color: black !important;
-}
-
 #xBut {
   background-color: #ed2121;
   transition-property: background-color;

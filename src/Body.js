@@ -9,6 +9,7 @@ import {db} from './firebase';
 import firebase from 'firebase';
 
 import './index.css';
+import './Body.scss'
 
 import Button from '@material-ui/core/Button';
 
@@ -34,58 +35,12 @@ export default function Body(props){
     const [users, setUsers] = value1;
     console.log(users);
     
-    const body = {
-        margin: '50px auto',
-        width:'999px',
-        border:'1px solid black',
-        display: 'flex',
-        justifyContent: 'start',
-        flexWrap: 'wrap'
-    };
-
-    const divstyle = {
-        maxWidth:'250px',
-        margin: '50px 41px',
-        backgroundColor: 'white'
-    }
-    const pstyle = {
-        margin: 0,
-        textAlign: 'center',
-        
-    }
-    const pstyle1 = {
-        margin: 0,
-        textAlign: 'center',
-        color: 'red',
-        fontWeight: 'bold'
-    }
-
-    const inputButton = {
-        height: 40,
-        width: 300,
-        fontSize: 18,
-        backgroundColor: 'rgb(59, 95, 199)',
-        color: 'white',
-        border : '2px solid black',
-        borderRadius: 3,
-        cursor: 'pointer',
-        fontFamily: 'Roboto',
-        fontWeight: 'bold'
-    };
 
     const ids = {
         1: 1,
         2: 2
     };
     
-    const mobBody = {
-        border:'1px solid black',
-        display: 'flex',
-        width: 320,
-        flexWrap: 'wrap',
-        margin: '50px auto'
-    }
-
 
 
     const [car, setCar] = useState([]);
@@ -305,20 +260,20 @@ export default function Body(props){
     const displayCars = car.slice(pagesVisited, pagesVisited + carsPerPage).map(item => {
         return (
             
-            <div style={divstyle}>
+            <div className="car-card">
                     
                         {flag == true?
-                        <div style={{textAlign:'right'}}>
-                            <button style={{position:'absolute',color:'white',border:'none',fontSize:18}} onClick={()=>handleDelete(item.id,item.data.carNam)} id="xBut">X</button>
+                        <div className="car-card-button-container">
+                            <button className="car-card-button" onClick={()=>handleDelete(item.id,item.data.carNam)} id="xBut">X</button>
                         </div>
                         :
                         null
                         }
-                        <img style={{width:'250px'}} src={item.data.carImg} />
+                        <img src={item.data.carImg} className="car-card-image" />
                         <Link to={item.data.linkto}>
-                            <p style={pstyle}>{item.data.carNam}</p>
+                            <p className="car-card-name">{item.data.carNam}</p>
                             </Link>
-                        <p style={pstyle1}>{item.data.carPrice}</p>
+                        <p className="car-card-price">{item.data.carPrice}</p>
                    
                         
             </div>
@@ -339,14 +294,17 @@ export default function Body(props){
         <div>
 
             {user ? 
-            <div style={{display:'flex',width:'90%',alignItems:'flex-end',flexDirection:'column'}}>
-                <p style={{margin:0}}>Logged in as</p>
+            <div className="session-container">
+                <p>Logged in as</p>
                 {users.map(item=>{
                     return (
                         <>
                             {item.data.user.map(obj=>{
                             return (
-                                <p style={{fontWeight:700,margin:0}}>{obj.email == user.email ? obj.name : null}</p>
+                                <>
+                                    <p>{obj.email == user.email ? obj.name : null}</p>
+                                    <p>{obj.email == user.email ? obj.email : null}</p>
+                                </>
                             )
                             })}
                         </>
@@ -357,22 +315,22 @@ export default function Body(props){
             null
             }
 
-            <h1 style={{textAlign:'center',fontWeight:'bold'}}>FEATURED CARS</h1>
+            <h1 className="featured-heading">FEATURED CARS</h1>
         </div>
 
         {flag == true? 
-        <div style={{textAlign: 'center'}}>
-            <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7'}} onClick={handleClick} id="addBut">Add a new car</Button>
+        <div className="add-car-button-container">
+            <Button variant="contained" color="primary" className="add-car-button" onClick={handleClick} id="addBut">Add a new car</Button>
         </div>
         :
         null
         }
         
-        <div style={screen>800?{width:999, margin:'50px auto', border:'1px solid black',display:'none'}:{width:'auto', margin:'50px auto', border:'1px solid black',display:'none'}} id="addCar">
+        <div className="add-car-form-container" id="addCar">
         
 
-            <h2 style={{textAlign:'center'}}>ADD A NEW CAR</h2>
-            <form style={{margin:'30px 30px'}} onSubmit={handleSubmit}>
+            <h2>ADD A NEW CAR</h2>
+            <form onSubmit={handleSubmit} className="add-car-form">
                 <h3>IMAGE</h3>
                 <input type="text" name="img" placeholder="Enter link of image of car..." onChange={handleChange} value={all.img || ""}/>
                 <h3>NAME</h3>
@@ -382,9 +340,9 @@ export default function Body(props){
                 <br></br>
                 <br></br>
                 <br></br>
-                <div style={{display: 'flex',justifyContent:'space-around'}}>
-                    <input type="submit" value="ADD THE CAR" style={inputButton}/>
-                    <input type="button" value="CANCEL" onClick={handleCancel} style={inputButton}/>
+                <div className="add-car-buttons-container">
+                    <input type="submit" value="ADD THE CAR" className="add-car-buttons" />
+                    <input type="button" value="CANCEL" onClick={handleCancel} className="add-car-buttons" />
                 </div>
             </form>
         </div>
@@ -392,10 +350,10 @@ export default function Body(props){
 
 
         {screen > 800 ? 
-        <div style={body}>
+        <div className="cars-container">
             
             {displayCars}
-            <div style={{width:'100%',marginTop: '15px'}}>
+            <div className="paginate-container">
                 <ReactPaginate
                     previousLabel={"Previous"}
                     nextLabel={"Next"}
@@ -411,11 +369,11 @@ export default function Body(props){
         </div>
         : 
 
-        <div style={mobBody}>
+        <div className="mobile-cars-container">
 
 
             {displayCars}
-            <div style={{width:'100%'}}>
+            <div className="mobile-paginate-container">
                 <ReactPaginate
                     previousLabel={"Previous"}
                     nextLabel={"Next"}

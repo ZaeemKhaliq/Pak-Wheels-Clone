@@ -1,0 +1,45 @@
+.header-container {
+  width: 100%;
+  background-color: #3b5fc7;
+  height: 100px;
+  display: flex;
+}
+
+.header-left {
+  flex: 0.4;
+}
+
+.header-logo {
+  height: 70%;
+  width: 70%;
+}
+
+.mob-header-logo {
+  height: 100%;
+  width: 100%;
+}
+
+.header-right {
+  display: flex;
+  align-self: center;
+  flex: 0.6;
+  justify-content: space-around;
+}
+
+.header-buttons {
+  background-color: transparent !important;
+  color: white !important;
+  border: 2px solid black !important;
+}
+
+.login-button,
+.logout-button {
+  background-color: black !important;
+  color: white !important;
+}
+
+@media screen and (max-width: 800px) {
+  .header-right {
+    justify-content: flex-end;
+  }
+}
