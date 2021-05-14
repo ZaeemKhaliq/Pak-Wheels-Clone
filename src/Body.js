@@ -1,78 +1,51 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+
+import { MobContext } from './mobile';
+import { AuthContext } from './Auth';
+import { CarContext } from './allDetails';
+
 import {db} from './firebase';
-import { AllDetails, CarContext } from './allDetails';
 import firebase from 'firebase';
+
+import './index.css';
+import './Body.scss'
+
+import Button from '@material-ui/core/Button';
+
+import ReactPaginate from 'react-paginate';
 import Fade from 'react-reveal/Fade';
 import { useConfirm } from 'material-ui-confirm';
-import ReactPaginate from 'react-paginate';
+
 
 export default function Body(props){
 
-    const {value,value2} = useContext(CarContext);
-    const [screen,setScreen] = value2;
-    console.log(screen);
+    const [screen,setScreen] = useContext(MobContext);
+    // console.log(screen);
 
+    const { val, val1 } = useContext(AuthContext);
     
-    const body = {
-        margin: '50px auto',
-        width:'999px',
-        border:'1px solid black',
-        display: 'flex',
-        justifyContent: 'start',
-        flexWrap: 'wrap'
-    };
+    const [flag,setFlag] = val;
 
-    const divstyle = {
-        maxWidth:'250px',
-        margin: '50px 41px',
-        backgroundColor: 'white'
-    }
-    const pstyle = {
-        margin: 0,
-        textAlign: 'center',
-        
-    }
-    const pstyle1 = {
-        margin: 0,
-        textAlign: 'center',
-        color: 'red',
-        fontWeight: 'bold'
-    }
+    const [user, setUser] = val1;
+    console.log(user);
 
-    const inputButton = {
-        height: 40,
-        width: 300,
-        fontSize: 18,
-        backgroundColor: 'rgb(59, 95, 199)',
-        color: 'white',
-        border : '2px solid black',
-        borderRadius: 3,
-        cursor: 'pointer',
-        fontFamily: 'Roboto',
-        fontWeight: 'bold'
-    };
+
+    const {value1} = useContext(CarContext);
+    const [users, setUsers] = value1;
+    console.log(users);
+    
 
     const ids = {
         1: 1,
         2: 2
     };
     
-    const mobBody = {
-        border:'1px solid black',
-        display: 'flex',
-        width: 320,
-        flexWrap: 'wrap',
-        margin: '50px auto'
-    }
-
 
 
     const [car, setCar] = useState([]);
     const [delVal, setDelVal] = useState([]);
+    
 
     useEffect(() => {
         // db.collection('Cars').get().then((snapShot) => {
@@ -108,15 +81,14 @@ export default function Body(props){
 					
 			})        
 
-            
     },[]);
 
 
     const len = Object.keys(car).length;
     const lenInString = len.toString();
-    console.log(car);
-    console.log(len);
-    console.log(lenInString);
+    // console.log(car);
+    // console.log(len);
+    // console.log(lenInString);
 
     
 
@@ -288,17 +260,20 @@ export default function Body(props){
     const displayCars = car.slice(pagesVisited, pagesVisited + carsPerPage).map(item => {
         return (
             
-            <div style={divstyle}>
+            <div className="car-card">
                     
-                   
-                        <div style={{textAlign:'right'}}>
-                            <button style={{position:'absolute',color:'white',border:'none',fontSize:18}} onClick={()=>handleDelete(item.id,item.data.carNam)} id="xBut">X</button>
+                        {flag == true?
+                        <div className="car-card-button-container">
+                            <button className="car-card-button" onClick={()=>handleDelete(item.id,item.data.carNam)} id="xBut">X</button>
                         </div>
-                        <img style={{width:'250px'}} src={item.data.carImg} />
+                        :
+                        null
+                        }
+                        <img src={item.data.carImg} className="car-card-image" />
                         <Link to={item.data.linkto}>
-                            <p style={pstyle}>{item.data.carNam}</p>
+                            <p className="car-card-name">{item.data.carNam}</p>
                             </Link>
-                        <p style={pstyle1}>{item.data.carPrice}</p>
+                        <p className="car-card-price">{item.data.carPrice}</p>
                    
                         
             </div>
@@ -313,19 +288,49 @@ export default function Body(props){
     }
 
     
+    
     return (
         <main>
-        <h1 style={{textAlign:'center',fontWeight:'bold'}}>FEATURED CARS</h1>
+        <div>
 
-        <div style={{textAlign: 'center'}}>
-            <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7'}} onClick={handleClick} id="addBut">Add a new car</Button>
+            {user ? 
+            <div className="session-container">
+                <p>Logged in as</p>
+                {users.map(item=>{
+                    return (
+                        <>
+                            {item.data.user.map(obj=>{
+                            return (
+                                <>
+                                    <p>{obj.email == user.email ? obj.name : null}</p>
+                                    <p>{obj.email == user.email ? obj.email : null}</p>
+                                </>
+                            )
+                            })}
+                        </>
+                    )
+                })}
+            </div>
+            :
+            null
+            }
+
+            <h1 className="featured-heading">FEATURED CARS</h1>
         </div>
+
+        {flag == true? 
+        <div className="add-car-button-container">
+            <Button variant="contained" color="primary" className="add-car-button" onClick={handleClick} id="addBut">Add a new car</Button>
+        </div>
+        :
+        null
+        }
         
-        <div style={screen>800?{width:999, margin:'50px auto', border:'1px solid black',display:'none'}:{width:'auto', margin:'50px auto', border:'1px solid black',display:'none'}} id="addCar">
+        <div className="add-car-form-container" id="addCar">
         
 
-            <h2 style={{textAlign:'center'}}>ADD A NEW CAR</h2>
-            <form style={{margin:'30px 30px'}} onSubmit={handleSubmit}>
+            <h2>ADD A NEW CAR</h2>
+            <form onSubmit={handleSubmit} className="add-car-form">
                 <h3>IMAGE</h3>
                 <input type="text" name="img" placeholder="Enter link of image of car..." onChange={handleChange} value={all.img || ""}/>
                 <h3>NAME</h3>
@@ -335,9 +340,9 @@ export default function Body(props){
                 <br></br>
                 <br></br>
                 <br></br>
-                <div style={{display: 'flex',justifyContent:'space-around'}}>
-                    <input type="submit" value="ADD THE CAR" style={inputButton}/>
-                    <input type="button" value="CANCEL" onClick={handleCancel} style={inputButton}/>
+                <div className="add-car-buttons-container">
+                    <input type="submit" value="ADD THE CAR" className="add-car-buttons" />
+                    <input type="button" value="CANCEL" onClick={handleCancel} className="add-car-buttons" />
                 </div>
             </form>
         </div>
@@ -345,10 +350,10 @@ export default function Body(props){
 
 
         {screen > 800 ? 
-        <div style={body}>
+        <div className="cars-container">
             
             {displayCars}
-            <div style={{width:'100%',marginTop: '15px'}}>
+            <div className="paginate-container">
                 <ReactPaginate
                     previousLabel={"Previous"}
                     nextLabel={"Next"}
@@ -364,11 +369,11 @@ export default function Body(props){
         </div>
         : 
 
-        <div style={mobBody}>
+        <div className="mobile-cars-container">
 
 
             {displayCars}
-            <div style={{width:'100%'}}>
+            <div className="mobile-paginate-container">
                 <ReactPaginate
                     previousLabel={"Previous"}
                     nextLabel={"Next"}

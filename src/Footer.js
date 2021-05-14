@@ -1,40 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+
+import { MobContext } from './mobile';
+
+import './Footer.scss';
+
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Button from '@material-ui/core/Button';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import InstagramIcon from '@material-ui/icons/Instagram';
-import {CarContext} from './allDetails';
+
 
 export default function Footer(){
 
-    const {value,value2} = useContext(CarContext);
-    const [screen,setScreen] = value2;
-    console.log(screen);
-
-    const footstyle = {
-        width: '100%',
-        backgroundColor: 'black',
-        display: 'flex',
-        position: 'relative',
-        flexDirection:'column'
-      };
-
-      const footleft ={
-        flex:0.6,
-        display: 'flex',
-        alignItems: 'center', 
-        justifyContent: 'space-around'
-      };
-
-      const footright = {
-        flex:0.4,
-        display:'flex',
-        flexDirection:'column',
-        alignItems:'center'
-      };
-
+    const [screen,setScreen] = useContext(MobContext);
 
       const [date, setDate] = useState('');
 
@@ -48,14 +27,14 @@ export default function Footer(){
     return (
         <>
         {screen > 800 ? 
-        <div style={footstyle}>
+        <div className="footer-container">
             <div style={{display:'flex',flex:'1'}}>
-                <div style={footleft}>
-                    <p style={{color: 'white'}}>About Us</p>
-                    <p style={{color: 'white'}}>Contact Us</p>
-                    <p style={{color: 'white'}}>Locations</p>
+                <div className="footer-left">
+                    <p>About Us</p>
+                    <p>Contact Us</p>
+                    <p>Locations</p>
                 </div>
-                <div style={footright}>
+                <div className="footer-right">
                 <div>
                     <p style={{color: 'white'}}>Follow Us On</p>
                 </div>
@@ -83,14 +62,14 @@ export default function Footer(){
         </div>
         :
 
-        <div style={footstyle}>
+        <div className="footer-container">
             <div style={{display:'flex',flex:'1',flexDirection:'column'}}>
-                <div style={footleft}>
-                    <p style={{color: 'white'}}>About Us</p>
-                    <p style={{color: 'white'}}>Contact Us</p>
-                    <p style={{color: 'white'}}>Locations</p>
+                <div className="footer-left">
+                    <p>About Us</p>
+                    <p>Contact Us</p>
+                    <p>Locations</p>
                 </div>
-                <div style={footright}>
+                <div className="footer-right">
                 <div>
                     <p style={{color: 'white'}}>Follow Us On</p>
                 </div>

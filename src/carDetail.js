@@ -1,81 +1,36 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import Carousel from 'react-elastic-carousel';
-import {CarContext} from './allDetails'
+
+import { CarContext } from './allDetails';
+import { MobContext } from './mobile';
+import { AuthContext } from './Auth';
+
 import {db} from './firebase';
-import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
+
+import Carousel from 'react-elastic-carousel';
+
+import './index.css';
+import './CarDetail.scss';
+
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 
 export const CarDetail = props => {
 
-  /* STYLINGS */
-
-const sidetab = {
-  backgroundColor: 'rgb(59, 95, 199)',
-  height: 50,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center'
-}
-
-const bodydiv = {
-    width: 999,
-    border: '1px solid black',
-    margin: '50px auto',
-    display: 'flex',
-    paddingBottom: 20
-}
-
-const mobbodydiv = {
-  width: 'auto',
-  border: '1px solid black',
-  margin: '50px auto',
-  display: 'flex',
-  paddingBottom: 20
-}
-
-const p = {
-  textAlign: 'center', 
-  color:'white', 
-  fontWeight: 'bold', 
-  margin:0,
-  fontFamily: 'Open Sans, sans-serif'
-}
-
-const inputButton = {
-  height: 40,
-  width: 300,
-  fontSize: 18,
-  backgroundColor: 'rgb(59, 95, 199)',
-  color: 'white',
-  border : '2px solid black',
-  borderRadius: 3,
-  cursor: 'pointer',
-  fontFamily: 'Roboto',
-  fontWeight: 'bold'
-};
-
-const headings = {
-  fontFamily: 'Lato,sans-serif',
-  fontWeight: '900',
-  color:'black'
-}
-  /*STYLINGS*/
-
-
   const num = props.match.params.id;
 
 
-  const {value,value2} = useContext(CarContext);
+  const {value} = useContext(CarContext);
 
   const [allDetails, setAlldetails] = value;
 
-  const [screen,setScreen] = value2;
+  const [screen,setScreen] = useContext(MobContext);
+
+  const { val } = useContext(AuthContext)
+  const [flag, setFlag] = val;
 
 
   console.log(screen);
@@ -364,18 +319,22 @@ const headings = {
 
    return (  
     <main>
-
-    <div style={{textAlign: 'center'}}>
-    <Button variant="contained" color="primary" style={{backgroundColor: '#3B5FC7',marginTop:50}} onClick={handleClick} id="addBut">Add Details</Button>
+    
+    {flag == true ? 
+    <div className="add-details-button-container">
+    <Button variant="contained" color="primary" className="add-details-button" onClick={handleClick} id="addBut">Add Details</Button>
     </div>
+    :
+    null
+    }
 
-    <div id="addDetails" style={{display:'none'}}>
-      <h1 style={{textAlign:'center'}}>ADD DETAILS OF THE CAR!</h1>
-      <p style={{textAlign:'center'}}>(Only fill those fields that you want to add, leave others empty)</p>
-      <p style={{color:'red',textAlign:'center'}}>(Where there are two fields, both are required otherwise it will not be added)</p>
-      <div style={screen > 800 ? bodydiv : mobbodydiv}>
-        <form style={{margin:'30px 30px',width:'100%'}} onSubmit={handleSubmit}>
-          <div style={screen > 800 ? {display:'flex',justifyContent:'space-between'} : null}>
+    <div id="addDetails" className="add-details-container">
+      <h1 className="add-details-heading">ADD DETAILS OF THE CAR!</h1>
+      <p>(Only fill those fields that you want to add, leave others empty)</p>
+      <p>(Where there are two fields, both are required otherwise it will not be added)</p>
+      <div className="add-details-form-container">
+        <form className="add-details-form" onSubmit={handleSubmit}>
+          <div className="form-division">
             <div>
               <h3>COLORS</h3>
               <input type="text" name="col" value={all.col || ""} placeholder="Enter color code..." onChange={handleChange}/>
@@ -393,26 +352,18 @@ const headings = {
             </div>
             <div>
               <h3>DESCRIPTION</h3>
-              {screen > 800 ? 
-              <textarea cols="60" rows="10" name="descrip" placeholder="Enter Description..." value={all.descrip || ""} onChange={handleChange} id="textarea"></textarea>
-              :
-              <textarea cols="40" rows="10" name="descrip" placeholder="Enter Description..." value={all.descrip || ""} onChange={handleChange} id="textarea"></textarea>
-              }
+              <textarea cols={screen > 800 ? "60" : "40"} rows="10" name="descrip" placeholder="Enter Description..." value={all.descrip || ""} onChange={handleChange} id="textarea"></textarea>
               <br></br>
               <h3>SPECS AND FEATURES</h3>
               <input type="text" name="spechead" placeholder="Enter Heading" value={all.spechead || ""} onChange={handleChange}/>
               <br></br>
-              {screen > 800 ? 
-              <textarea cols="60" rows="10" name="specsub" placeholder="Enter sub-heading" value={all.specsub || ""} onChange={handleChange} id="textarea"></textarea>
-              :
-              <textarea cols="40" rows="10" name="specsub" placeholder="Enter sub-heading" value={all.specsub || ""} onChange={handleChange} id="textarea"></textarea>
-              }
+              <textarea cols={screen > 800 ? "60" : "40"} rows="10" name="specsub" placeholder="Enter sub-heading" value={all.specsub || ""} onChange={handleChange} id="textarea"></textarea>
               {/* <input type="text" name="specsub" placeholder="Enter Sub-heading" value={all.specsub || ""} onChange={handleChange}/> */}
             </div>
           </div>
-          <div style={screen > 800 ? {display: 'flex',justifyContent:'space-around',marginTop:50}:{display: 'flex',justifyContent:'space-around',marginTop:50,maxWidth:300}}>
-            <input type="submit" value="SUBMIT" style={inputButton}/>
-            <input type="button" value="CANCEL" style={inputButton} onClick={handleCancel}/>
+          <div className="add-details-buttons-container">
+            <input type="submit" value="SUBMIT" />
+            <input type="button" value="CANCEL" onClick={handleCancel}/>
           </div>
         </form>
       </div>
@@ -422,13 +373,13 @@ const headings = {
 
 
      
-      <div style={screen > 800? bodydiv : mobbodydiv}>
-        <div style={{flex:'0.7'}}>
+      <div className="main-container">
+        <div className="main-container-left">
 
 
           {/* CAROUSEL STARTS */}
-          <div style={{textAlign: 'center',width:'95%',margin:'0px 0px 0px 10px'}}>
-            <h3 style={{textAlign:'left',fontFamily:'Lato,sans-serif',fontWeight:'900'}}>IMAGE CAROUSEL</h3>
+          <div className="carousel-container">
+            <h3 className="carousel-heading">IMAGE CAROUSEL</h3>
                {allDetails.map((item,index) => {
                 
                 return(
@@ -441,10 +392,14 @@ const headings = {
                       
                     return (
                       <div>
-                        <div style={{textAlign:'right'}}>
-                          <button style={{color:'white',border:'none',fontSize:18}} id="xBut" onClick={()=>handleDeleteImg(obj.img)}>X</button>
+                        {flag == true ? 
+                        <div className="carousel-delete">
+                          <button className="carousel-delete-button" id="xBut" onClick={()=>handleDeleteImg(obj.img)}>X</button>
                         </div>
-                        <img style={{width: '80%'}} key={obj.id} src={obj.img} />
+                        :
+                        null
+                        }
+                        <img key={obj.id} src={obj.img} className="carousel-image" />
                       </div>
                     );
                     })}
@@ -460,9 +415,9 @@ const headings = {
 
 
           {/* DESCRIPTION STARTS */}
-          <div style={screen > 800 ? {width:'95%',margin:'0px 0px 0px 10px'} : {width:'90%',margin:'0px 0px 0px 10px'}}>
+          <div className="description-container">
             
-            <h3 style={headings}>DESCRIPTION</h3>
+            <h3 className="description-heading">DESCRIPTION</h3>
             {allDetails.map((item,index)=>{          
                 return (
                   <>
@@ -470,10 +425,14 @@ const headings = {
                   item.data.details.descrip.map(obj => {
                     return (
                       <div>
-                        <div style={{textAlign:'right'}}>
-                          <button style={{color:'red',border:'none',fontSize:14,height:14,width:18,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeletePara(obj.para)}>X</button>
+                        {flag == true ? 
+                        <div className="description-delete">
+                          <button className="description-delete-button" id="xBut1" onClick={()=>handleDeletePara(obj.para)}>X</button>
                         </div>
-                        <p style={screen > 800 ? {color:'black'} : {color:'black',fontSize:12}}>{obj.para}</p>
+                        :
+                        null
+                        }
+                        <p className="description-paragraph">{obj.para}</p>
                       </div>
                     );
                   })}
@@ -490,10 +449,10 @@ const headings = {
 
 
         {/* COLORS STARTS */}
-        <div style={screen > 800 ? {width:'95%',margin:'0px 0px 0px 10px'} : {width:'90%',margin:'0px 0px 0px 10px'}}>
-            <h3 style={headings}>COLORS</h3>
+        <div className="colors-container">
+            <h3 className="colors-heading">COLORS</h3>
 
-            <div style={{display:'flex',justifyContent:'space-around',flexWrap:'wrap'}}>
+            <div className="colors-division">
 
               {allDetails.map((item,index) => {
                     return (
@@ -501,12 +460,16 @@ const headings = {
                     {index != num?null:
                     item.data.color.map(obj => {
                       return (
-                        <div style={{textAlign: 'center'}}>
-                          <div style={{textAlign:'right'}}>
-                            <button style={{color:'red',border:'none',fontSize:12,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteColor(obj.col,obj.colname)}>X</button>
+                        <div className="color-name-container">
+                          {flag == true ? 
+                          <div className="color-delete">
+                            <button className="color-delete-button" id="xBut1" onClick={()=>handleDeleteColor(obj.col,obj.colname)}>X</button>
                           </div>
+                          :
+                          null
+                          }
                           <FiberManualRecordIcon style={{color: obj.col,fontSize:90}}></FiberManualRecordIcon>
-                          <p style={{margin:0}}>{obj.colname}</p>
+                          <p className="color-name">{obj.colname}</p>
                         </div>
                       );
                     })}
@@ -526,10 +489,10 @@ const headings = {
 
 
         {/* SPECS AND FEATURES STARTS */}
-          <div style={screen > 800 ? {width:'95%',margin:'0px 0px 0px 10px'} : {width:'90%',margin:'0px 0px 0px 10px'}}>
-            <h3 style={headings}>SPECS AND FEATURES</h3>
+          <div className="specs-container">
+            <h3 className="specs-heading">SPECS AND FEATURES</h3>
 
-            <div style={{width:'95%',margin:'0 auto'}}>
+            <div className="specs-division">
 
                 {allDetails.map((item,index) => {
                   return (
@@ -538,15 +501,19 @@ const headings = {
                     item.data.specs.map(obj => {
                       return (
                         <>
-                        <div style={{textAlign:'right'}}>
-                              <button style={{color:'red',border:'none',fontSize:14,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteSpecs(obj.head,obj.subhead)}>X</button>
-                            </div>
-                        <h4 style={{fontWeight:'bolder'}}>{obj.head}</h4>
+                        {flag == true ? 
+                        <div className="specs-delete">
+                          <button className="specs-delete-button" id="xBut1" onClick={()=>handleDeleteSpecs(obj.head,obj.subhead)}>X</button>
+                        </div>
+                        :
+                        null
+                        }
+                        <h4 className="specs-subheading">{obj.head}</h4>
                         {obj.subhead.map(para => {
                           return (
                             <>
                             
-                            <p style={screen > 800 ? {color:'black'} : {color:'black',fontSize:12}}>{para.para}</p>
+                            <p className="specs-paragraph">{para.para}</p>
                             </>
                           );
                         })}
@@ -565,14 +532,14 @@ const headings = {
 
         </div>
 
-        <div style={{flex:'0.3',backgroundColor: '#F7F7F7',borderTop:'1px solid black',borderBottom:'1px solid black',borderLeft:'1px solid black'}}>
+        <div className="main-container-right">
           
           
           {/* SIDETAB STARTS */}
-          <div style={sidetab}>
-            <h3 style={p}>SIDETAB</h3>
+          <div className="sidetab-container">
+            <h3 className="sidetab-heading">SIDETAB</h3>
           </div>
-          <div style={{backgroundColor: "black",height: 15,display: 'flex',flexDirection: 'column',justifContent: 'center'}}>
+          <div className="sidetab-heading-separator">
 
           </div>
            {allDetails.map((item,index) => {
@@ -582,14 +549,18 @@ const headings = {
                     item.data.side.map(obj => {
                       return (
                         <div>
-                          <div style={sidetab}>
-                            <div style={{textAlign:'right'}}>
+                          <div className="sidetab-container">
+                            {flag == true ? 
+                            <div className="sidetab-delete">
                               {/* <button style={{color:'red',border:'none',fontSize:14,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteSide(obj.head,obj.subhead)}>X</button> */}
-                              <DeleteForeverIcon onClick={()=>handleDeleteSide(obj.head,obj.subhead)} style={{position:'absolute',cursor:'pointer'}}></DeleteForeverIcon>
+                              <DeleteForeverIcon className="sidetab-delete-button" onClick={()=>handleDeleteSide(obj.head,obj.subhead)}></DeleteForeverIcon>
                             </div>
-                            <p style={p}>{obj.head}</p>
+                            :
+                            null
+                            }
+                            <p className="sidetab-heading">{obj.head}</p>
                           </div>
-                          <p style={{textAlign: 'center',fontSize: 22,fontWeight:'bold',fontFamily:'News Cycle,sans-serif',color:'black'}}>{obj.subhead}</p>
+                          <p className="sidetab-subheading">{obj.subhead}</p>
                         </div>
                       );
                     })}

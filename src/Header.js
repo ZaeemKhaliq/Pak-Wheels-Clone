@@ -1,63 +1,47 @@
-import React, { useContext, useState } from 'react';
-import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useHistory, withRouter } from 'react-router-dom';
+
+
+import { MobContext } from './mobile';
+import { AuthContext } from './Auth';
+
+import { auth } from './firebase';
+import {db} from './firebase';
+import firebase from 'firebase';
+
 import './index.css';
 import './dropdown.css';
-import { Link, withRouter } from 'react-router-dom';
-import {CarContext} from './allDetails';
+import './Header.scss';
+
 import {GrMenu} from 'react-icons/gr';
+import Button from '@material-ui/core/Button';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 
-export default function Header(){
-    const {value,value2} = useContext(CarContext);
-    const [screen,setScreen] = value2;
-    console.log(screen);
+function Header(){
 
+    const [screen,setScreen] = useContext(MobContext);
 
-    const headstyle = {
-      width: '100%',
-      backgroundColor: '#3B5FC7',
-      height: 100,
-      display: 'flex'
-    };
-    const headButton = {
-      backgroundColor: 'transparent',
-      color: 'white', 
-      border: '2px solid black'
-    };
-    const ulstyle = {
-        listStyle: 'none',
-        padding: 0,
-        margin: 0,
-        color: 'white',
-        backgroundColor: 'rgb(59, 95, 199)',
-        display: 'none',
-        position: 'absolute'
-    };
-    const link = {
-      textDecoration: 'none',
-      color: 'white'
-    };
-    const listitem = {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: 40
-    };
+    const { val } = useContext(AuthContext);
+    const [flag,setFlag] = val;
+    console.log(flag);
 
+    const history = useHistory();
+
+    const logoutClick = (event) => {
+      event.preventDefault();
+      auth.signOut().then(() => {
+        console.log("User signed out");
+        history.push('/');
+      })
+    }
     
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorEl1, setAnchorEl1] = useState(null);
     const [anchorEl2, setAnchorEl2] = useState(null);
     const [anchorEl3, setAnchorEl3] = useState(null);
-
-    console.log(anchorEl);
-    console.log(anchorEl1);
-    console.log(anchorEl2);
-    console.log(anchorEl3);
 
 
     const buttons = [{
@@ -164,30 +148,37 @@ export default function Header(){
 
     
     return (
-      <div style={headstyle}>
-        <div style={{flex: '0.4'}}>
+      <div className="header-container">
+        <div className="header-left">
           <Link to="/">
             {screen > 800 ? 
                 <img src="https://wsa1.pakwheels.com/assets/new-pw-logo-white-b8b4c00b25fde9cc8f514dc4947c266a.svg" 
-              alt="pakwheels"
-              style={{height:'70%',width:'70%'}} />
+                alt="pakwheels"
+                className="header-logo"
+                />
           :
-                <img style={{height:'100%',width:'100%'}} src="https://wsa1.pakwheels.com/assets/new-pw-logo-white-b8b4c00b25fde9cc8f514dc4947c266a.svg" 
-              alt="pakwheels"/>
+                <img src="https://wsa1.pakwheels.com/assets/new-pw-logo-white-b8b4c00b25fde9cc8f514dc4947c266a.svg" 
+                alt="pakwheels"
+                className="mob-header-logo"
+                />
             }
           </Link>
         </div>
-        <div style={{alignSelf: 'center', flex: '0.6',justifyContent: 'space-around', display: 'flex'}}>
+
+
+        <div className="header-right">
           
-
-
-
         {screen > 800 ? 
           buttons.map(item => {
             return (
               <div>
             
-                <Button variant="contained" style={headButton} aria-controls="simple-menu" aria-haspopup="true" onClick={(e)=>handleClick(item.id,e)}>
+                <Button variant="contained" 
+                className="header-buttons" 
+                aria-controls="simple-menu" 
+                aria-haspopup="true" 
+                onClick={(e)=>handleClick(item.id,e)}
+                >
                   {item.text}
                   <ArrowDropDownIcon style={{position: 'relative',left: 10}} />
                 </Button>
@@ -221,10 +212,20 @@ export default function Header(){
           </div>
           }
 
-
+          <div>
+            <Link to="/authenticate" style={{textDecoration:'none'}}>
+              {flag == false ? 
+              <Button variant="contained" className="login-button">LOGIN</Button> 
+              :
+              <Button variant="contained" className="logout-button" onClick={logoutClick}>LOGOUT</Button>
+              }
+            </Link>
+          </div>
 
           
         </div>
       </div>
     );
   }
+
+  export default withRouter(Header);
