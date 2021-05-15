@@ -69,21 +69,21 @@ export default function Signup(){
                 <form className="form" name="signup-form">
                     <label>Name</label>
                     <br></br>
-                    <input type="text" placeholder="Enter name..."  className="form-inputs" name="name" onChange={handleChange} value={info.name || ''} required/>
+                    <input type="text" placeholder="Enter name..."  id="form-inputs" name="name" onChange={handleChange} value={info.name || ''} required/>
 
                     <br></br>
                     <br></br>
 
                     <label>Email</label>
                     <br></br>
-                    <input type="email" placeholder="Enter email address..." className="form-inputs" name="email" onChange={handleChange} value={info.email || ''} required/>
+                    <input type="email" placeholder="Enter email address..." id="form-inputs" name="email" onChange={handleChange} value={info.email || ''} required/>
 
                     <br></br>
                     <br></br>
 
                     <label>Password</label>
                     <br></br>
-                    <input type="password" placeholder="Enter password..." className="form-inputs" name="password" onChange={handleChange} value={info.password || ''} required/>
+                    <input type="password" placeholder="Enter password..." id="form-inputs" name="password" onChange={handleChange} value={info.password || ''} required/>
 
                     <br></br>
                     <br></br>

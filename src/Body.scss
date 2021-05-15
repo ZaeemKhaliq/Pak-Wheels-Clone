@@ -19,6 +19,7 @@
   text-align: center;
   font-weight: bold;
   margin-bottom: 0;
+  font-size: 36px;
 }
 
 .add-car-button-container {
@@ -37,11 +38,30 @@
 
   & > h2 {
     text-align: center;
+    font-size: 24px;
+    font-weight: bolder;
   }
 }
 
 .add-car-form {
   margin: 30px 30px;
+
+  & > h3 {
+    font-size: 20px;
+    font-weight: bolder;
+  }
+}
+
+#add-car-form-inputs {
+  width: 40%;
+  border: 1px solid black;
+  padding: 1px 5px;
+  height: 30px;
+  font-size: 14px;
+
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 .add-car-buttons-container {

@@ -2,6 +2,7 @@
   font-family: "Lato", sans-serif;
   font-weight: 900;
   color: black;
+  font-size: 20px;
 }
 
 @mixin containers {
@@ -33,6 +34,8 @@
 
 .add-details-heading {
   text-align: center;
+  font-size: 36px;
+  font-weight: bolder;
 }
 
 .add-details-form-container {
@@ -46,6 +49,60 @@
 .add-details-form {
   margin: 30px 30px;
   width: 100%;
+}
+
+#input-color {
+  width: 25%;
+  border: 1px solid black;
+  padding: 1px 5px;
+  height: 30px;
+  margin: 0px 10px;
+}
+
+#input-image {
+  width: 50%;
+  border: 1px solid black;
+  padding: 1px 5px;
+  height: 30px;
+  margin: 0px 10px;
+}
+
+#input-spechead {
+  width: 50%;
+  border: 1px solid black;
+  padding: 1px 5px;
+  height: 30px;
+}
+
+#input-sidetab {
+  width: 25%;
+  border: 1px solid black;
+  padding: 1px 5px;
+  height: 30px;
+  margin: 0px 10px;
+}
+
+#input-description,
+#input-specsub {
+  width: 50%;
+  height: 100px;
+  min-height: 80px;
+  max-height: 120px;
+  min-width: 45%;
+  max-width: 55%;
+}
+
+.input-submit {
+  height: 40px;
+  width: 20%;
+  font-size: 18px;
+  background-color: #3b5fc7;
+  color: white;
+  border: 2px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: "Roboto";
+  font-weight: bold;
 }
 
 .form-division {
@@ -90,6 +147,7 @@
 }
 
 .carousel-heading {
+  font-size: 20px;
   text-align: left;
   font-weight: 900;
   font-family: "Lato", sans-serif;
@@ -196,6 +254,7 @@
 
 .specs-subheading {
   font-weight: bolder;
+  font-size: 18px;
 }
 
 .specs-paragraph {
@@ -224,6 +283,7 @@
   font-weight: bold;
   margin: 0;
   font-family: "Open Sans", sans-serif;
+  font-size: 18px;
 }
 
 .sidetab-heading-separator {
@@ -271,11 +331,25 @@
     display: block;
   }
 
+  .add-details-form {
+    margin: 30px auto;
+  }
+
   .add-details-form-container {
     width: auto;
   }
 
-  .add-details-buttons-container {
-    max-width: 300px;
+  .add-details-buttons-container > input {
+    width: 50%;
+  }
+
+  .input-submit {
+    width: 35%;
+  }
+
+  #input-color,
+  #input-image,
+  #input-sidetab {
+    width: 85%;
   }
 }

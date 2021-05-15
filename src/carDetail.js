@@ -9,16 +9,33 @@ import firebase from 'firebase';
 
 import Carousel from 'react-elastic-carousel';
 
+
 import './index.css';
 import './CarDetail.scss';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import M from 'materialize-css';
 
 export const CarDetail = props => {
+
+  useEffect(()=> {
+    var elems = document.querySelectorAll('.collapsible');
+  
+    
+    var options = {
+      accordion: true,
+    }
+
+    M.Collapsible.init(elems, options);
+  },[])
+
 
   const num = props.match.params.id;
 
@@ -37,6 +54,28 @@ export const CarDetail = props => {
   console.log(allDetails);
   console.log(num);
 
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleSnackbarClose1 = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+
+      setOpen1(false);
+  };
   
 
   // let cond;
@@ -161,7 +200,7 @@ export const CarDetail = props => {
 
 
     if(attributes.col == "" || attributes.colname == ""){
-
+      
     }
     else{
       db.collection("CarDetails").doc(`${num}`).update({
@@ -169,6 +208,12 @@ export const CarDetail = props => {
           col: attributes.col,
           colname: attributes.colname
         })
+      }).then(()=>{
+        setOpen(true);
+
+        const elem = document.querySelector('.collapsible');
+        const instance = M.Collapsible.getInstance(elem);
+        instance.close(0);
       })
     }
 
@@ -183,7 +228,11 @@ export const CarDetail = props => {
           img: attributes.img
         })
       }).then(() => {
-        alert("Image Added Successfully!");
+        setOpen(true);
+
+        const elem = document.querySelector('.collapsible');
+        const instance = M.Collapsible.getInstance(elem);
+        instance.close(1);
       })
     }
 
@@ -197,6 +246,12 @@ export const CarDetail = props => {
           head: attributes.head,
           subhead: attributes.subhead
         })
+      }).then(() => {
+        setOpen(true);
+        
+        const elem = document.querySelector('.collapsible');
+        const instance = M.Collapsible.getInstance(elem);
+        instance.close(2);
       })
     }
 
@@ -210,6 +265,12 @@ export const CarDetail = props => {
             para: attributes.descrip
         })
       
+      }).then(() => {
+        setOpen(true);
+
+        const elem = document.querySelector('.collapsible');
+        const instance = M.Collapsible.getInstance(elem);
+        instance.close(3);
       })
     }
 
@@ -245,7 +306,10 @@ export const CarDetail = props => {
     db.collection("CarDetails").doc(`${num}`).update({
       specs: specArr
     }).then((success) => {
-    alert(success);
+      setOpen(true);
+      const elem = document.querySelector('.collapsible');
+      const instance = M.Collapsible.getInstance(elem);
+      instance.close(4);
     })
   }
 
@@ -267,6 +331,14 @@ export const CarDetail = props => {
     setAll({col: '', colname: '',img:'',head:'',subhead:'',descrip:'',spechead:'',specsub:''});
     document.getElementById("addDetails").style.display = "none";
     document.getElementById("addBut").style.display = "";
+
+    var elem = document.querySelector('.collapsible');
+    var instance = M.Collapsible.getInstance(elem);
+    instance.close(0);
+    instance.close(1);
+    instance.close(2);
+    instance.close(3);
+    instance.close(4);
   };
 
 
@@ -277,6 +349,8 @@ export const CarDetail = props => {
       items: firebase.firestore.FieldValue.arrayRemove({
         img:img
       })
+    }).then(()=>{
+      setOpen1(true);
     })
   }
 
@@ -285,6 +359,8 @@ export const CarDetail = props => {
       ['details.descrip']: firebase.firestore.FieldValue.arrayRemove({
         para: para
     })
+    }).then(()=>{
+      setOpen1(true);
     })
   }
 
@@ -294,6 +370,8 @@ export const CarDetail = props => {
         col: col,
         colname:colname
     })
+    }).then(()=>{
+      setOpen1(true);
     })
   }
 
@@ -303,6 +381,8 @@ export const CarDetail = props => {
         head: head,
         subhead:subhead
     })
+    }).then(()=>{
+      setOpen1(true);
     })
   }
 
@@ -312,6 +392,8 @@ export const CarDetail = props => {
         head: head,
         subhead:subhead
     })
+    }).then(()=>{
+      setOpen1(true);
     })
   }
 
@@ -332,9 +414,68 @@ export const CarDetail = props => {
       <h1 className="add-details-heading">ADD DETAILS OF THE CAR!</h1>
       <p>(Only fill those fields that you want to add, leave others empty)</p>
       <p>(Where there are two fields, both are required otherwise it will not be added)</p>
+
+      
+      
+
+
       <div className="add-details-form-container">
         <form className="add-details-form" onSubmit={handleSubmit}>
-          <div className="form-division">
+
+          <div>
+            
+              <ul class="collapsible">
+                <li>
+                  <div class="collapsible-header"><i class="material-icons">add_circle_outline</i>Colors</div>
+                  <div class="collapsible-body">
+                    <input type="text" name="col" value={all.col || ""} id="input-color" placeholder="Enter color code..." onChange={handleChange}/>
+                    <input type="text" name="colname" value={all.colname || ""} id="input-color" placeholder="Enter color name..." onChange={handleChange}/>
+                    <input type="submit" value="ADD" className="input-submit" />
+                  </div>
+                </li>
+                <li>
+                  <div class="collapsible-header"><i class="material-icons">add_circle_outline</i>Add Image To Carousel</div>
+                  <div class="collapsible-body">
+                    <input type="text" name="img" value={all.img || ""} id="input-image" placeholder="Enter image link..." onChange={handleChange}/>
+                    <input type="submit" value="ADD" className="input-submit" />
+                  </div>
+                </li>
+
+                <li>
+                  <div class="collapsible-header"><i class="material-icons">add_circle_outline</i>Sidetab</div>
+                  <div class="collapsible-body">
+                    <input type="text" name="head" id="input-sidetab" placeholder="Enter Heading" value={all.head || ""} onChange={handleChange}/>
+                    <input type="text" name="subhead" id="input-sidetab" placeholder="Enter Sub-heading" value={all.subhead || ""} onChange={handleChange}/>
+                    <input type="submit" value="ADD" className="input-submit" />
+                  </div>
+                </li>
+            
+                <li>
+                  <div class="collapsible-header"><i class="material-icons">add_circle_outline</i>Description</div>
+                  <div class="collapsible-body">
+                    <textarea name="descrip" id="input-description" placeholder="Enter Description..." value={all.descrip || ""} onChange={handleChange}></textarea>
+                    <br></br>
+                    <input type="submit" value="ADD" className="input-submit" />
+                  </div>
+                </li>
+                <li>
+                  <div class="collapsible-header"><i class="material-icons">add_circle_outline</i>Specs and features</div>
+                  <div class="collapsible-body">
+                    <input type="text" name="spechead" id="input-spechead" placeholder="Enter Heading" value={all.spechead || ""} onChange={handleChange}/>
+                    <br></br>
+                    <textarea cols={screen > 800 ? "60" : "40"} rows="10" name="specsub" id="input-specsub" placeholder="Enter sub-heading" value={all.specsub || ""} onChange={handleChange}></textarea>
+                    <br></br>
+                    <input type="submit" value="ADD" className="input-submit" />
+                  </div>
+                </li>
+            
+                
+              </ul>
+
+          </div>
+
+
+          {/* <div className="form-division">
             <div>
               <h3>COLORS</h3>
               <input type="text" name="col" value={all.col || ""} placeholder="Enter color code..." onChange={handleChange}/>
@@ -358,11 +499,14 @@ export const CarDetail = props => {
               <input type="text" name="spechead" placeholder="Enter Heading" value={all.spechead || ""} onChange={handleChange}/>
               <br></br>
               <textarea cols={screen > 800 ? "60" : "40"} rows="10" name="specsub" placeholder="Enter sub-heading" value={all.specsub || ""} onChange={handleChange} id="textarea"></textarea>
-              {/* <input type="text" name="specsub" placeholder="Enter Sub-heading" value={all.specsub || ""} onChange={handleChange}/> */}
+              <input type="text" name="specsub" placeholder="Enter Sub-heading" value={all.specsub || ""} onChange={handleChange}/>
             </div>
           </div>
-          <div className="add-details-buttons-container">
+          
             <input type="submit" value="SUBMIT" />
+             */}
+
+          <div className="add-details-buttons-container">
             <input type="button" value="CANCEL" onClick={handleCancel}/>
           </div>
         </form>
@@ -575,7 +719,22 @@ export const CarDetail = props => {
         </div>
 
       </div>
+
+
+
       
+
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity="success">
+                Added Successfully!
+            </Alert>
+        </Snackbar>
+
+        <Snackbar open={open1} autoHideDuration={3000} onClose={handleSnackbarClose1}>
+            <Alert onClose={handleSnackbarClose1} severity="success" style={{backgroundColor:'#f44336'}}>
+                Removed Successfully!
+            </Alert>
+        </Snackbar>
     </main>
   );
 }

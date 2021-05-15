@@ -12,10 +12,13 @@ import './index.css';
 import './Body.scss'
 
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { useConfirm } from 'material-ui-confirm';
 
 import ReactPaginate from 'react-paginate';
 import Fade from 'react-reveal/Fade';
-import { useConfirm } from 'material-ui-confirm';
+
 
 
 export default function Body(props){
@@ -39,6 +42,29 @@ export default function Body(props){
     const ids = {
         1: 1,
         2: 2
+    };
+
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+    const [open, setOpen] = React.useState(false);
+    const [open1, setOpen1] = React.useState(false);
+
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+    };
+
+    const handleSnackbarClose1 = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen1(false);
     };
     
 
@@ -165,6 +191,8 @@ export default function Body(props){
             carPrice: attributes.price,
             linkto: `/carDetail/${popVal}`
         }).then((err) => {
+            setOpen(true);
+
             db.collection("CarDetails").doc(`${popVal}`).set({
                 color: [],
                 items: [],
@@ -185,6 +213,8 @@ export default function Body(props){
             carPrice: attributes.price,
             linkto: `/carDetail/${len}`
         }).then((err) => {
+            setOpen(true);
+            
             db.collection("CarDetails").doc(`${len}`).set({
                 color: [],
                 items: [],
@@ -213,6 +243,8 @@ export default function Body(props){
             db.collection("Cars").doc(id).delete().then((err) => {
                 db.collection("CarDetails").doc(id).delete()
             }).then(()=>{
+                setOpen1(true);
+
                 db.collection("DelArray").doc('0').update({
                     val: firebase.firestore.FieldValue.arrayUnion(id)
                 })
@@ -332,11 +364,11 @@ export default function Body(props){
             <h2>ADD A NEW CAR</h2>
             <form onSubmit={handleSubmit} className="add-car-form">
                 <h3>IMAGE</h3>
-                <input type="text" name="img" placeholder="Enter link of image of car..." onChange={handleChange} value={all.img || ""}/>
+                <input type="text" name="img" id="add-car-form-inputs" placeholder="Enter link of image of car..." onChange={handleChange} value={all.img || ""}/>
                 <h3>NAME</h3>
-                <input type="text" name="nam" placeholder="Enter name of car..." onChange={handleChange} value={all.nam || ""}/>
+                <input type="text" name="nam" id="add-car-form-inputs" placeholder="Enter name of car..." onChange={handleChange} value={all.nam || ""}/>
                 <h3>PRICE</h3>
-                <input type="text" name="price" placeholder="Enter price of car..." onChange={handleChange} value={all.price || ""}/>
+                <input type="text" name="price" id="add-car-form-inputs" placeholder="Enter price of car..." onChange={handleChange} value={all.price || ""}/>
                 <br></br>
                 <br></br>
                 <br></br>
@@ -389,6 +421,18 @@ export default function Body(props){
 
         </div>
         }
+
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity="success">
+                Car Added Successfully!
+            </Alert>
+        </Snackbar>
+
+        <Snackbar open={open1} autoHideDuration={3000} onClose={handleSnackbarClose1}>
+            <Alert onClose={handleSnackbarClose1} severity="success" style={{backgroundColor:'#f44336'}}>
+                Car Deleted Successfully!
+            </Alert>
+        </Snackbar>
         </main>
     );
 }

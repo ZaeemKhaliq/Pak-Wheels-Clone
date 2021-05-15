@@ -62,7 +62,7 @@ function Login(){
                         <div className="field-division">
                             <label>Email</label>
                             <br></br>
-                            <input type="email" placeholder="Enter email address..." className="form-inputs" name="email" onChange={handleChange} value={info.email || ''} required />
+                            <input type="email" placeholder="Enter email address..." id="form-inputs" name="email" onChange={handleChange} value={info.email || ''} required />
                         </div>
 
                         <br></br>
@@ -71,7 +71,7 @@ function Login(){
                         <div className="field-division">
                             <label>Password</label>
                             <br></br>
-                            <input type="password" placeholder="Enter password..." className="form-inputs" name="password" onChange={handleChange} value={info.password || ''} required />
+                            <input type="password" placeholder="Enter password..." id="form-inputs" name="password" onChange={handleChange} value={info.password || ''} required />
                         </div>
 
                         <br></br>
