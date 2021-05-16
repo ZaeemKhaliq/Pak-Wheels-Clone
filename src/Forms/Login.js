@@ -19,6 +19,11 @@ function Login(){
     const { val } = useContext(AuthContext);
     const [flag,setFlag] = val;
 
+    const [error,setError] = useState();
+    console.log(error);
+
+    const [errorFlag, setErrorFlag] = useState(false);
+
     const handleChange = (event) => {
         const val = event.target.value;
         const name = event.target.name;
@@ -48,6 +53,10 @@ function Login(){
                 console.log(cred.user);
                 setInfo({});
                 
+            }).catch(err => {
+                setBool(false);
+                setError(err);
+                setErrorFlag(true);
             })
         }
         
@@ -75,7 +84,11 @@ function Login(){
                         </div>
 
                         <br></br>
-                        <br></br>
+                        
+
+                        <div className="error-division">
+                            {errorFlag == true ? <p>{error.message}</p> : null}
+                        </div>
 
                         <div className="login-but-div">
                             <Button className="login-but" variant="outlined" onClick={handleClick} type="submit">{bool == false ? 'LOGIN' : <CircularProgress style={{color:'white',width:24,height:24}} />}</Button>

@@ -283,6 +283,14 @@ export default function Body(props){
         setAll({});
     };
 
+    let role;
+    if(user != null){
+        users.map(item=> item.data.user.map(obj=> obj.email == user.email ? role = obj.role : null));
+        console.log(role);
+    }
+    
+    
+
 
     const [pageNumber,setPageNumber] = useState(0);
 
@@ -294,7 +302,8 @@ export default function Body(props){
             
             <div className="car-card">
                     
-                        {flag == true?
+                        {flag == true ?
+                        role != "admin" ? null : 
                         <div className="car-card-button-container">
                             <button className="car-card-button" onClick={()=>handleDelete(item.id,item.data.carNam)} id="xBut">X</button>
                         </div>
@@ -334,8 +343,9 @@ export default function Body(props){
                             {item.data.user.map(obj=>{
                             return (
                                 <>
-                                    <p>{obj.email == user.email ? obj.name : null}</p>
-                                    <p>{obj.email == user.email ? obj.email : null}</p>
+                                    {obj.email == user.email ? <p>{obj.name}</p> : null}
+                                    {obj.email == user.email ? <p>{obj.email}</p> : null}
+                                   
                                 </>
                             )
                             })}
@@ -350,7 +360,8 @@ export default function Body(props){
             <h1 className="featured-heading">FEATURED CARS</h1>
         </div>
 
-        {flag == true? 
+        {flag == true?
+        role != "admin" ? null : 
         <div className="add-car-button-container">
             <Button variant="contained" color="primary" className="add-car-button" onClick={handleClick} id="addBut">Add a new car</Button>
         </div>

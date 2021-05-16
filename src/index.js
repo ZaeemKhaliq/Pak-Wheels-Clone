@@ -32,8 +32,10 @@ function Main(){
                 <Switch>
                 
                   <Route path="/" exact component={Body}/>
-                  <Route path="/carDetail/:id" component={CarDetail}/>
                   <Route path="/authenticate" component={AuthForm}/>
+
+                  
+                  <Route path="/carDetail/:id" component={CarDetail}/>
                   
                 </Switch>
               </AllDetails>

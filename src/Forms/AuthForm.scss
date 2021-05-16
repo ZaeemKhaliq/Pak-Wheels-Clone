@@ -37,6 +37,13 @@ label {
   width: 100%;
 }
 
+.error-division {
+  & > p {
+    text-align: center;
+    color: red;
+  }
+}
+
 #form-inputs {
   height: 2rem;
   width: 95%;

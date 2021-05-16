@@ -50,7 +50,8 @@ export default function Signup(){
                     user: firebase.firestore.FieldValue.arrayUnion({
                         name: info.name,
                         email: info.email,
-                        password: info.password
+                        password: info.password,
+                        role: 'user'
                     })
                 });
 
@@ -66,6 +67,7 @@ export default function Signup(){
             {flag == true ? <Redirect to='/'/> :
             <>
                 <h2 className="title">SIGNUP FOR AN ACCOUNT</h2>
+                <p style={{textAlign:'center'}}>You can use any dummy email</p>
                 <form className="form" name="signup-form">
                     <label>Name</label>
                     <br></br>

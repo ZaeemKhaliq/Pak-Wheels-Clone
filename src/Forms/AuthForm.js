@@ -22,7 +22,7 @@ export default function AuthForm(){
     return (
         <>
             <div className="auth-form-container">
-                <p className="login-message">Login to account in order to add/delete or update cars or their details.</p>
+                <p className="login-message"><span style={{fontWeight:'bolder'}}>NOTE: </span>Admin can add/delete or update cars or their details. Users can post a comment on the car page. By Default you will be signed up as a user.</p>
                 <div className="form-container">
                     <div className="form-block">
                         {mode == 'login' ? <Login /> : <Signup/>}

@@ -9,6 +9,7 @@ import firebase from 'firebase';
 
 import Carousel from 'react-elastic-carousel';
 
+import CommentSection from './CommentSection';
 
 import './index.css';
 import './CarDetail.scss';
@@ -40,19 +41,27 @@ export const CarDetail = props => {
   const num = props.match.params.id;
 
 
-  const {value} = useContext(CarContext);
-
+  const {value, value1} = useContext(CarContext);
   const [allDetails, setAlldetails] = value;
+  const [users, setUsers] = value1;
+  console.log(users);
 
   const [screen,setScreen] = useContext(MobContext);
 
-  const { val } = useContext(AuthContext)
+  const { val, val1 } = useContext(AuthContext)
   const [flag, setFlag] = val;
-
+  const [user, setUser] = val1;
+  console.log(user);
 
   console.log(screen);
   console.log(allDetails);
   console.log(num);
+
+  let role;
+  if(user != null){
+      users.map(item=> item.data.user.map(obj=> obj.email == user.email ? role = obj.role : null));
+      console.log(role);
+  }
 
 
   function Alert(props) {
@@ -402,7 +411,8 @@ export const CarDetail = props => {
    return (  
     <main>
     
-    {flag == true ? 
+    {flag == true ?
+    role != "admin" ? null : 
     <div className="add-details-button-container">
     <Button variant="contained" color="primary" className="add-details-button" onClick={handleClick} id="addBut">Add Details</Button>
     </div>
@@ -536,7 +546,8 @@ export const CarDetail = props => {
                       
                     return (
                       <div>
-                        {flag == true ? 
+                        {flag == true ?
+                        role != "admin" ? null : 
                         <div className="carousel-delete">
                           <button className="carousel-delete-button" id="xBut" onClick={()=>handleDeleteImg(obj.img)}>X</button>
                         </div>
@@ -569,7 +580,8 @@ export const CarDetail = props => {
                   item.data.details.descrip.map(obj => {
                     return (
                       <div>
-                        {flag == true ? 
+                        {flag == true ?
+                        role != "admin" ? null : 
                         <div className="description-delete">
                           <button className="description-delete-button" id="xBut1" onClick={()=>handleDeletePara(obj.para)}>X</button>
                         </div>
@@ -605,7 +617,8 @@ export const CarDetail = props => {
                     item.data.color.map(obj => {
                       return (
                         <div className="color-name-container">
-                          {flag == true ? 
+                          {flag == true ?
+                          role != "admin" ? null : 
                           <div className="color-delete">
                             <button className="color-delete-button" id="xBut1" onClick={()=>handleDeleteColor(obj.col,obj.colname)}>X</button>
                           </div>
@@ -645,7 +658,8 @@ export const CarDetail = props => {
                     item.data.specs.map(obj => {
                       return (
                         <>
-                        {flag == true ? 
+                        {flag == true ?
+                        role != "admin" ? null : 
                         <div className="specs-delete">
                           <button className="specs-delete-button" id="xBut1" onClick={()=>handleDeleteSpecs(obj.head,obj.subhead)}>X</button>
                         </div>
@@ -694,7 +708,8 @@ export const CarDetail = props => {
                       return (
                         <div>
                           <div className="sidetab-container">
-                            {flag == true ? 
+                            {flag == true ?
+                            role != "admin" ? null : 
                             <div className="sidetab-delete">
                               {/* <button style={{color:'red',border:'none',fontSize:14,position:'absolute',backgroundColor:'transparent'}} id="xBut1" onClick={()=>handleDeleteSide(obj.head,obj.subhead)}>X</button> */}
                               <DeleteForeverIcon className="sidetab-delete-button" onClick={()=>handleDeleteSide(obj.head,obj.subhead)}></DeleteForeverIcon>
@@ -721,7 +736,7 @@ export const CarDetail = props => {
       </div>
 
 
-
+      <CommentSection num={num}/>
       
 
       <Snackbar open={open} autoHideDuration={3000} onClose={handleSnackbarClose}>
